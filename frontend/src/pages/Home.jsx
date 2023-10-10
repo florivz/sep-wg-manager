@@ -1,7 +1,9 @@
 import React from 'react';
 import Header from '../components/Header';
+import { useRoommates } from '../contexts/RoommateContext';
 
 function Home() {
+
     return (
         <div>
             <Header text='WG Manager' />
