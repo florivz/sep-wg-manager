@@ -1,5 +1,7 @@
 const express = require('express');
+require('dotenv').config();
 const cors = require('cors');
+const roommatesRoutes = require('./routes/roommatesRoutes');
 
 const app = express();
 
@@ -7,8 +9,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Routes
+app.use('/api', roommatesRoutes);
+
 // Testroute
-app.get('/', (req, res) => {
+app.get('/serverstatus', (req, res) => {
     res.send('Server is running');
 });
 
@@ -16,17 +21,4 @@ const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
-});
-
-const pool = require('./config/db');
-
-
-// Method to test if server is running on Port 5001
-app.get('/testdb', async (req, res) => {
-    try {
-        const response = await pool.query('SELECT datname FROM pg_database;');
-        res.json(response.rows);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
 });
