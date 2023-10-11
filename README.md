@@ -50,7 +50,7 @@ Ein Webanwendungsprojekt für Wohngemeinschaften, um Putzpläne, Einkaufslisten 
 
 5. **Starten Sie die Anwendung**:
 
-   Backend (läuft auf Port 5001 auf http://localhost:5001/testdb):
+   Backend (läuft auf Port 5001 auf http://localhost:5001/):
 
    ```bash
    cd path/backend
