@@ -2,6 +2,7 @@ const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
 const roommatesRoutes = require('./routes/roommatesRoutes');
+const shoppingListRoutes = require('./routes/shoppingListRoutes'); // Füge die Shopping-List-Routen hinzu
 
 const app = express();
 
@@ -9,8 +10,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Routes
+// Roommates Routes
 app.use('/api', roommatesRoutes);
+
+// Shopping List Routes
+app.use('/api', shoppingListRoutes); // Füge die Shopping-List-Routen hinzu
 
 // Testroute
 app.get('/serverstatus', (req, res) => {
