@@ -2,7 +2,9 @@ const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
 const roommatesRoutes = require('./routes/roommatesRoutes');
-const shoppingListRoutes = require('./routes/shoppingListRoutes'); // Füge die Shopping-List-Routen hinzu
+const shoppingListRoutes = require('./routes/shoppingListRoutes');
+const housePlanRoutes = require('./routes/housePlanRoutes');
+const cleaningPlanRoutes = require('./routes/cleaningPlanRoutes');
 
 const app = express();
 
@@ -14,7 +16,13 @@ app.use(express.json());
 app.use('/api', roommatesRoutes);
 
 // Shopping List Routes
-app.use('/api', shoppingListRoutes); // Füge die Shopping-List-Routen hinzu
+app.use('/api', shoppingListRoutes);
+
+// House Plan Routes
+app.use('/api', housePlanRoutes);
+
+// Cleaning Plan Routes
+app.use('/api', cleaningPlanRoutes);
 
 // Testroute
 app.get('/serverstatus', (req, res) => {
@@ -24,5 +32,5 @@ app.get('/serverstatus', (req, res) => {
 const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on port ${PORT} (http://localhost:5001/)`);
 });

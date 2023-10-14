@@ -2,7 +2,9 @@ const express = require('express');
 const { getAllRoommates } = require('../services/roommatesService');
 const router = express.Router();
 
-router.get('/getAllRoommates', async (req, res) => {
+router.get(
+    '/getAllRoommates', 
+    async (req, res) => {
     try {
         const roommates = await getAllRoommates();
         res.json(roommates);
