@@ -6,7 +6,6 @@ const {
 } = require('../services/shoppingListService');
 const router = express.Router();
 
-// Route zum Abrufen der Einkaufsliste
 router.get('/getShoppingList', async (req, res) => {
   try {
     const shoppingList = await getShoppingList();
@@ -16,7 +15,6 @@ router.get('/getShoppingList', async (req, res) => {
   }
 });
 
-// Route zum Löschen eines Einkaufsgegenstands
 router.delete('/deleteShoppingListItem/:itemID', async (req, res) => {
   const itemID = req.params.itemID;
   try {
@@ -27,7 +25,6 @@ router.delete('/deleteShoppingListItem/:itemID', async (req, res) => {
   }
 });
 
-// Route zum Hinzufügen eines neuen Einkaufsgegenstands
 router.post('/addShoppingListItem', async (req, res) => {
   const { itemName } = req.body;
   try {
