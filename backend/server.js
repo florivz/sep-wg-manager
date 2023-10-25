@@ -5,12 +5,16 @@ const roommatesRoutes = require('./routes/roommatesRoutes');
 const shoppingListRoutes = require('./routes/shoppingListRoutes');
 const housePlanRoutes = require('./routes/housePlanRoutes');
 const cleaningPlanRoutes = require('./routes/cleaningPlanRoutes');
+const loginRoutes = require('./routes/loginRoutes');
 
 const app = express();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Login Routes
+app.use('/api', loginRoutes);
 
 // Roommates Routes
 app.use('/api', roommatesRoutes);
