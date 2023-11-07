@@ -2,28 +2,34 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loginResponse, setLoginResponse] = useState('');
     const navigate = useNavigate();
+    const { login } = useAuth(); 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        axios.get(`http://localhost:5001/api/login?username=${username}&password=${password}`)
-            .then(response => {
-                setLoginResponse(response.status);
-                if (response.status === 200) {
-                    navigate('/home');
-                }
-            })
-            .catch(error => {
-                setLoginResponse('Login fehlgeschlagen');
-                console.error(error);
+
+        try {
+            const response = await axios.post('http://localhost:5001/api/login', {
+                username,
+                password
             });
 
-        console.log('Username:', username, 'Password:', password);
+            if (response.status === 200) {
+                login(response.data);
+                navigate('/home');
+            } else {
+                setLoginResponse('Login fehlgeschlagen: Ungültiger Statuscode');
+            }
+        } catch (error) {
+            setLoginResponse(error.response ? error.response.data : 'Login fehlgeschlagen: Netzwerkfehler');
+            console.error(error);
+        }
     };
 
     return (
