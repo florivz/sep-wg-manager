@@ -37,7 +37,7 @@ Ein Webanwendungsprojekt für Wohngemeinschaften, um Putzpläne, Einkaufslisten 
    ```
     DB_USER=wg_manager
     DB_HOST=localhost
-    DB_DATABASE=wg-manager-db
+    DB_NAME=wg-manager-db
     DB_PASSWORD=<your_password>
     DB_PORT=5432
    ```
