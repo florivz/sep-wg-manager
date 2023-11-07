@@ -28,6 +28,7 @@ app.use('/api', housePlanRoutes);
 // Cleaning Plan Routes
 app.use('/api', cleaningPlanRoutes);
 
+
 // Testroute
 app.get('/serverstatus', (req, res) => {
     res.send('Server is running');

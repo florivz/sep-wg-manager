@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
+import axios from 'axios';
 
 function CleaningSchedule() {
   const [roommates, setRoommates] = useState([]);
@@ -31,6 +32,23 @@ function CleaningSchedule() {
     setRoommates(updatedRoommates);
   };
 
+  const [text, setText] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:5001/api/getShoppingList')
+      .then(response => {
+        if (Array.isArray(response.data)) {
+          setText(response.data);
+          console.log(response.data);
+        } else {
+          console.error('Data is not an array:', response.data);
+        }
+      })
+      .catch(error => {
+        console.error('Error occurred while fetching data:', error);
+      });
+  }, []);
+
   return (
     <div>
       <Header text='WG Manager' />
@@ -40,57 +58,43 @@ function CleaningSchedule() {
           <h5 className="mb-3">Add a Roommate and their Task:</h5>
           <form onSubmit={addRoommate} className="mb-4">
             <div className="form-row">
-              <div className="form-group col-md-4">
-                <label htmlFor="firstName">First Name:</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="firstName"
-                  value={newRoommate.firstName}
-                  onChange={(e) =>
-                    setNewRoommate({ ...newRoommate, firstName: e.target.value })
-                  }
-                  required
-                />
+              <div className="col">
+                <input type="text" className="form-control" placeholder="Roommate Name" />
               </div>
-              <div className="form-group col-md-4">
-                <label htmlFor="lastName">Last Name:</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="lastName"
-                  value={newRoommate.lastName}
-                  onChange={(e) =>
-                    setNewRoommate({ ...newRoommate, lastName: e.target.value })
-                  }
-                  required
-                />
-              </div>
-              <div className="form-group col-md-4">
-                <label htmlFor="task">Task:</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="task"
-                  value={newRoommate.task}
-                  onChange={(e) =>
-                    setNewRoommate({ ...newRoommate, task: e.target.value })
-                  }
-                  required
-                />
+              <div className="col">
+                <input type="text" className="form-control" placeholder="Task" />
               </div>
             </div>
-            <button type="submit" className="btn btn-primary mb-3" style={{ marginTop: '10px' }}>
+            <button type="submit" className="btn btn-primary mt-3">
               Add Task
             </button>
           </form>
-
+  
           <h5 className="mb-3">Current Assignments:</h5>
-          <ul className="list-group">
-            {roommates.map((roommate, index) => (
+          <ul className="list-group list-group-flush">
+            {text.map((task, index) => (
               <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
-                {roommate.firstName} {roommate.lastName}: {roommate.task}
-                <button className="btn btn-danger btn-sm" onClick={() => deleteRoommate(index)}>Remove</button>
+                <div>
+                  <span className="mr-2">Task ID: {task.taskid}</span>
+                  <span>Task: {task.task}</span>
+                </div>
+                <div>
+                  <span className="mr-2">Roommate ID: {task.roommateid}</span>
+                </div>
+                <div>
+                  <div className="form-check">
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      id={`taskCheckbox${index}`}
+                      checked={task.done}
+                      readOnly
+                    />
+                    <label className="form-check-label" htmlFor={`taskCheckbox${index}`}>
+                      {task.done ? 'Done' : 'Not Done'}
+                    </label>
+                  </div>
+                </div>
               </li>
             ))}
           </ul>
@@ -98,6 +102,7 @@ function CleaningSchedule() {
       </div>
     </div>
   );
+  
 }
 
 export default CleaningSchedule;
