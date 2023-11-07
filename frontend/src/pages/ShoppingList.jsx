@@ -1,22 +1,51 @@
-import React, { useState } from 'react';
-import { FaAd, FaPlus, FaTrash } from 'react-icons/fa';
+import React, { useEffect, useState } from 'react';
+import { FaPlus, FaTrash } from 'react-icons/fa';
 import Header from '../components/Header';
+import axios from 'axios';
 
 const ShoppingList = () => {
-  const [items, setItems] = useState(['Apples', 'Bananas', 'Oranges']);
   const [newItem, setNewItem] = useState('');
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    fetchItems();
+  }, []);
+
+  const fetchItems = () => {
+    axios.get('http://localhost:5001/api/getItems')
+      .then(response => {
+        setItems(response.data);
+      })
+      .catch(error => {
+        console.log('Error occurred', error);
+      });
+  };
 
   const addItem = () => {
-    if (newItem !== '') {
-      setItems([...items, newItem]);
-      setNewItem('');
+    if (newItem.trim() !== '') {
+      const newItemObject = { itemname: newItem.trim() };
+      axios.post('http://localhost:5001/api/addShoppingListItem', newItemObject)
+        .then(response => {
+          setItems([...items, response.data]);
+          setNewItem('');
+        })
+        .catch(error => {
+          console.log('Error occurred while adding item:', error);
+        });
     }
   };
 
-  const removeItem = (index) => {
-    const newItems = [...items];
-    newItems.splice(index, 1);
-    setItems(newItems);
+  const removeItem = (itemId) => {
+    const parsedItemId = parseInt(itemId, 10);
+    console.log(parsedItemId);
+    axios.get(`http://localhost:5001/api/deleteShoppingListItem/${parsedItemId}`)
+      .then(response => {
+        setItems(items.filter(item => item.itemid !== parsedItemId));
+        console.log(`Item with ID: ${parsedItemId} has been deleted.`);
+      })
+      .catch(error => {
+        console.log('Error occurred while deleting item:', error);
+      });
   };
 
   return (
@@ -35,12 +64,12 @@ const ShoppingList = () => {
             />
             <div className="input-group-append">
               <button
-                className={`btn btn-${newItem ? 'primary' : 'secondary'}`}
+                className={`btn btn-${newItem.trim() ? 'primary' : 'secondary'}`}
                 type="button"
                 onClick={addItem}
-                disabled={!newItem}
-                title={newItem ? '' : 'Please enter an item to add'}
-                style={{marginLeft: "15px"}}
+                disabled={!newItem.trim()}
+                title={newItem.trim() ? '' : 'Please enter an item to add'}
+                style={{ marginLeft: "15px" }}
               >
                 <FaPlus />
               </button>
@@ -48,14 +77,13 @@ const ShoppingList = () => {
           </div>
           {items.length > 0 ? (
             <ul className="list-group">
-              {items.map((item, index) => (
-                <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
-                  {item}
+              {items.map((item) => (
+                <li key={item.itemid} className="list-group-item d-flex justify-content-between align-items-center">
+                  {item.itemname}
                   <button
                     className="btn btn-danger btn-sm"
-                    onClick={() => removeItem(index)}
+                    onClick={() => removeItem(item.itemid)}
                   >
-                    {/* Verwende dies, wenn du react-icons in deinem Projekt hast */}
                     <FaTrash />
                   </button>
                 </li>
