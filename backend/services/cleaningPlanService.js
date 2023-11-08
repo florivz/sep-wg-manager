@@ -9,6 +9,32 @@ const getAllCleaningTasks = async () => {
     }
 }
 
+const deleteCleaningTask = async (taskid) => {
+    try {
+        const query = 'DELETE FROM cleaningtasks WHERE taskid = $1';
+        const result = await pool.query(query, [taskid]);
+        return result;
+    } catch (error) {
+        throw error;
+    }
+};
+
+const addCleaningTask = async (roommateId, task) => {
+    try {
+      const query = 'INSERT INTO cleaningtasks (roommateid, task) VALUES ($1, $2)';
+      const result = await pool.query(query, [roommateId, task]);
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  };
+  
+  module.exports = {
+    addCleaningTask,
+  };
+
 module.exports = {
-    getAllCleaningTasks
+    getAllCleaningTasks,
+    addCleaningTask,
+    deleteCleaningTask
 }

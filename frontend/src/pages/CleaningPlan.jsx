@@ -1,42 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import axios from 'axios';
+import { FaTrash } from 'react-icons/fa';
+
 
 function CleaningSchedule() {
-  const [roommates, setRoommates] = useState([]);
-  const [newRoommate, setNewRoommate] = useState({
-    firstName: '',
-    lastName: '',
-    task: ''
-  });
-
-  const addRoommate = (event) => {
-    event.preventDefault();
-    if (
-      newRoommate.firstName &&
-      newRoommate.lastName &&
-      newRoommate.task
-    ) {
-      setRoommates([...roommates, newRoommate]);
-      setNewRoommate({
-        firstName: '',
-        lastName: '',
-        task: ''
-      });
-    }
-  };
-
-  const deleteRoommate = (index) => {
-    const updatedRoommates = [...roommates];
-    updatedRoommates.splice(index, 1);
-    setRoommates(updatedRoommates);
-  };
-
   const [text, setText] = useState([]);
+  const [roommates, setRoommates] = useState([]);
+  const [selectedRoommate, setSelectedRoommate] = useState('');
+  const [taskText, setTaskText] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:5001/api/getShoppingList')
-      .then(response => {
+    axios
+      .get('http://localhost:5001/api/getAllCleaningTasks')
+      .then((response) => {
         if (Array.isArray(response.data)) {
           setText(response.data);
           console.log(response.data);
@@ -44,65 +21,160 @@ function CleaningSchedule() {
           console.error('Data is not an array:', response.data);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error occurred while fetching data:', error);
+      });
+
+    axios
+      .get('http://localhost:5001/api/getAllRoommates')
+      .then((response) => {
+        if (Array.isArray(response.data)) {
+          setRoommates(response.data);
+          console.log(response.data);
+        } else {
+          console.error('Data is not an array:', response.data);
+        }
+      })
+      .catch((error) => {
+        console.error('Error occurred while fetching roommates:', error);
       });
   }, []);
 
+  const deleteTask = (taskid) => {
+    const parsedTaskId = parseInt(taskid);
+    axios.get(`http://localhost:5001/api/deleteCleaningTask/${parsedTaskId}`)
+      .then(response => {
+        console.log(`Task mit der ID ${parsedTaskId} wurde gelöscht`);
+        axios
+          .get('http://localhost:5001/api/getAllCleaningTasks')
+          .then((response) => {
+            if (Array.isArray(response.data)) {
+              setText(response.data);
+            } else {
+              console.error('Data is not an array:', response.data);
+            }
+          })
+          .catch((error) => {
+            console.error('Error occurred while fetching data:', error);
+          });
+      })
+      .catch(error => {
+        console.error('Fehler beim Löschen der Task: ', error);
+      });
+  }
+
+  const addTask = () => {
+    const parsedSelectedRoommate = parseInt(selectedRoommate);
+    if (selectedRoommate && taskText) {
+      const newTask = {
+        task: taskText,
+        roommateid: parsedSelectedRoommate,
+        done: false,
+      };
+
+      axios
+        .post('http://localhost:5001/api/addCleaningTask', newTask)
+        .then((response) => {
+          setText([...text, response.data]);
+          setTaskText('');
+          setSelectedRoommate('');
+          axios
+            .get('http://localhost:5001/api/getAllCleaningTasks')
+            .then((response) => {
+              if (Array.isArray(response.data)) {
+                setText(response.data);
+                console.log(response.data);
+              } else {
+                console.error('Data is not an array:', response.data);
+              }
+            })
+            .catch((error) => {
+              console.error('Error occurred while fetching data:', error);
+            });
+        })
+        .catch((error) => {
+          console.error('Error occurred while adding task:', error);
+        });
+    }
+  };
+
   return (
     <div>
-      <Header text='WG Manager' />
+      <Header text="WG Manager" />
       <div className="container my-5">
         <h1 className="text-center mb-4">Cleaning Schedule</h1>
         <div className="card p-4 shadow-sm" style={{ borderRadius: '15px' }}>
           <h5 className="mb-3">Add a Roommate and their Task:</h5>
-          <form onSubmit={addRoommate} className="mb-4">
+          <form className="mb-4">
             <div className="form-row">
               <div className="col">
-                <input type="text" className="form-control" placeholder="Roommate Name" />
+                <select
+                  className="form-control"
+                  value={selectedRoommate}
+                  onChange={(e) => setSelectedRoommate(e.target.value)}
+                >
+                  <option value="">Select Roommate</option>
+                  {roommates.map((roommate) => (
+                    <option key={roommate.roommateid} value={roommate.roommateid}>
+                      {roommate.firstname} {roommate.lastname}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="col">
-                <input type="text" className="form-control" placeholder="Task" />
+                <input
+                  type="text"
+                  className="form-control mt-2"
+                  placeholder="Task"
+                  value={taskText}
+                  onChange={(e) => setTaskText(e.target.value)}
+                />
+              </div>
+              <div className="col">
+                <button
+                  type="button"
+                  className="btn btn-primary mt-2"
+                  onClick={() => addTask()}
+                >
+                  Add Task
+                </button>
               </div>
             </div>
-            <button type="submit" className="btn btn-primary mt-3">
-              Add Task
-            </button>
           </form>
-  
           <h5 className="mb-3">Current Assignments:</h5>
-          <ul className="list-group list-group-flush">
-            {text.map((task, index) => (
-              <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
-                <div>
-                  <span className="mr-2">Task ID: {task.taskid}</span>
-                  <span>Task: {task.task}</span>
-                </div>
-                <div>
-                  <span className="mr-2">Roommate ID: {task.roommateid}</span>
-                </div>
-                <div>
-                  <div className="form-check">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      id={`taskCheckbox${index}`}
-                      checked={task.done}
-                      readOnly
-                    />
-                    <label className="form-check-label" htmlFor={`taskCheckbox${index}`}>
-                      {task.done ? 'Done' : 'Not Done'}
-                    </label>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <div className="table-responsive">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Task ID</th>
+                  <th>Task</th>
+                  <th>Roommate ID</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                {text.map((task, index) => (
+                  <tr key={index}>
+                    <td>{task.taskid}</td>
+                    <td>{task.task}</td>
+                    <td>{task.roommateid}</td>
+                    <td>
+                      <button
+                        type="button"
+                        className="btn btn-danger"
+                        onClick={() => deleteTask(task.taskid)}>
+                        <FaTrash />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
   );
-  
 }
 
 export default CleaningSchedule;
