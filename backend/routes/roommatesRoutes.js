@@ -31,7 +31,6 @@ router.delete(
     async (req, res) => {
         const id = req.params.id
         try {
-            console.log("Router: ", id)
             const result = await deleteRoommate(id);
             res.status(200).json({success: true, message: `Roommate with ID: ${id} is deleted.`});
         } catch (err) {

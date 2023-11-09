@@ -28,7 +28,6 @@ const addNewRoommate = async (firstname, lastname, email) => {
 };
 
 const deleteRoommate = async (id) => {
-  console.log("Service: ", id)
   try {
     id = parseInt(id);
     const result = await pool.query('DELETE FROM roommates WHERE roommateid = $1', [id]);

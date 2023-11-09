@@ -27,14 +27,12 @@ function RoommateManagement() {
 
   useEffect(() => {
     axios.get('http://localhost:5001/api/getAllRoommates', {
-      //roommateid: roommateid,
       firstname: firstname,
       lastname: lastname,
       email: email
     })
       .then((response) => {
         setRoommates(response.data);
-        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -53,11 +51,9 @@ function RoommateManagement() {
   };
 
   const deleteRoommate = (id) => {
-    console.log('JSX: ', id);
     axios.delete(`http://localhost:5001/api/deleteRoommate/${id}`,
     )
       .then((response) => {
-        console.log(response.data)
         fetchRoommates();
       })
       .catch((err) => {
@@ -72,7 +68,6 @@ function RoommateManagement() {
       email: email
     })
       .then((response) => {
-        console.log(response.data);
         fetchRoommates();
       })
       .catch((error) => {
