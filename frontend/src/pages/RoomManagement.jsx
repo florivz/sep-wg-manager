@@ -1,33 +1,84 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRoommates } from '../contexts/RoommateContext.js';
 import Header from '../components/Header';
+import axios from 'axios';
 
 function RoommateManagement() {
   const { roommates, setRoommates } = useRoommates();
 
   const [newRoommate, setNewRoommate] = useState({
-    firstName: '',
-    lastName: '',
+    firstname: '',
+    lastname: '',
     email: ''
   });
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (newRoommate.firstName && newRoommate.lastName && newRoommate.email) {
+    if (newRoommate.firstname && newRoommate.lastname && newRoommate.email) {
       setRoommates([...roommates, newRoommate]);
       setNewRoommate({
-        firstName: '',
-        lastName: '',
+        roommateid: '',
+        firstname: '',
+        lastname: '',
         email: ''
       });
     }
   };
 
-  const removeRoommate = (index) => {
-    const newRoommates = [...roommates];
-    newRoommates.splice(index, 1);
-    setRoommates(newRoommates);
+  useEffect(() => {
+    axios.get('http://localhost:5001/api/getAllRoommates', {
+      //roommateid: roommateid,
+      firstname: firstname,
+      lastname: lastname,
+      email: email
+    })
+      .then((response) => {
+        setRoommates(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  const fetchRoommates = () => {
+    axios.get('http://localhost:5001/api/getAllRoommates')
+      .then((response) => {
+        setRoommates(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
+
+  const deleteRoommate = (id) => {
+    console.log('JSX: ', id);
+    axios.delete(`http://localhost:5001/api/deleteRoommate/${id}`,
+    )
+      .then((response) => {
+        console.log(response.data)
+        fetchRoommates();
+      })
+      .catch((err) => {
+        console.log(err)
+      });
+  }
+
+  const addNewRoommate = (firstname, lastname, email) => {
+    axios.post('http://localhost:5001/api/addNewRoommate', {
+      firstname: firstname,
+      lastname: lastname,
+      email: email
+    })
+      .then((response) => {
+        console.log(response.data);
+        fetchRoommates();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   return (
     <div>
@@ -38,24 +89,24 @@ function RoommateManagement() {
           <form onSubmit={handleSubmit}>
             <div className="form-row">
               <div className="form-group col-md-4">
-                <label htmlFor="firstName">First Name:</label>
+                <label htmlFor="firstname">First Name:</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="firstName"
-                  value={newRoommate.firstName}
-                  onChange={(e) => setNewRoommate({ ...newRoommate, firstName: e.target.value })}
+                  id="firstname"
+                  value={newRoommate.firstname}
+                  onChange={(e) => setNewRoommate({ ...newRoommate, firstname: e.target.value })}
                   required
                 />
               </div>
               <div className="form-group col-md-4">
-                <label htmlFor="lastName">Last Name:</label>
+                <label htmlFor="lastname">Last Name:</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="lastName"
-                  value={newRoommate.lastName}
-                  onChange={(e) => setNewRoommate({ ...newRoommate, lastName: e.target.value })}
+                  id="lastname"
+                  value={newRoommate.lastname}
+                  onChange={(e) => setNewRoommate({ ...newRoommate, lastname: e.target.value })}
                   required
                 />
               </div>
@@ -71,7 +122,9 @@ function RoommateManagement() {
                 />
               </div>
             </div>
-            <button type="submit" className="btn btn-primary" style={{ marginTop: "20px", marginBottom: "20px" }}>
+            <button type="submit" className="btn btn-primary" style={{ marginTop: "20px", marginBottom: "20px" }}
+              onClick={() => addNewRoommate(newRoommate.firstname, newRoommate.lastname, newRoommate.email)}
+            >
               Add Roommate
             </button>
             <h4>Number of Roommates: {roommates.length}</h4>
@@ -80,10 +133,15 @@ function RoommateManagement() {
           <ul className="list-group mt-4">
             {roommates.map((roommate, index) => (
               <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
-                {roommate.firstName} {roommate.lastName} - {roommate.email}
+                <div>
+                  <span>ID: {roommate.roommateid}</span> <br />
+                  <span>Vorname: {roommate.firstname}</span> <br />
+                  <span>Nachname: {roommate.lastname}</span> <br />
+                  <span>Email: {roommate.email}</span>
+                </div>
                 <button
                   className="btn btn-danger btn-sm"
-                  onClick={() => removeRoommate(index)}
+                  onClick={() => deleteRoommate(roommate.roommateid)}
                 >
                   Remove
                 </button>

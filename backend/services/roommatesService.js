@@ -18,8 +18,30 @@ const getRoommateById = async (id) => {
   }
 };
 
+const addNewRoommate = async (firstname, lastname, email) => {
+  try {
+    const result = await pool.query('INSERT INTO roommates (firstname, lastname, email) VALUES ($1, $2, $3)', [firstname, lastname, email]);
+    return result;
+  } catch (err) {
+    throw err;
+  }
+};
+
+const deleteRoommate = async (id) => {
+  console.log("Service: ", id)
+  try {
+    id = parseInt(id);
+    const result = await pool.query('DELETE FROM roommates WHERE roommateid = $1', [id]);
+    return result;
+  } catch (err) {
+    throw err;
+  }
+}
+
 
 module.exports = {
   getAllRoommates,
   getRoommateById,
+  addNewRoommate,
+  deleteRoommate
 };
