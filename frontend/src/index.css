@@ -38,6 +38,7 @@
     justify-content: center;
     align-items: center;
     height: 10vh;
+    color: rgba(13, 110, 253);
 }
 
 .headerBtn{
@@ -86,4 +87,27 @@
   .btn-menu:hover {
     background-color: #0056b3;
   }
+
+  .logo-size {
+    max-width: 80px;
+    max-height: 80px;
+  }
+
+.background-image {
+  background-image: url('./img/home_bg.jpg');
+  background-size: cover; 
+  background-position: center center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.5;
+}
+
+.btn-outline-dark {
+  color:black;
+}
+
   
