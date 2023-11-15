@@ -52,7 +52,7 @@ const ShoppingList = () => {
     <div>
       <Header text='WG Manager' />
       <div className="container my-5">
-        <h1 className="text-center mb-4">Shopping List</h1>
+        <h1 className="text-center mb-4">Einkaufsliste</h1>
         <div className="card p-4 shadow-sm" style={{ borderRadius: '15px' }}>
           <div className="input-group mb-3">
             <input

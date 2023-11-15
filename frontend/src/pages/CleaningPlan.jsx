@@ -102,7 +102,7 @@ function CleaningSchedule() {
     <div>
       <Header text="WG Manager" />
       <div className="container my-5">
-        <h1 className="text-center mb-4">Cleaning Schedule</h1>
+        <h1 className="text-center mb-4">Putzplan</h1>
         <div className="card p-4 shadow-sm" style={{ borderRadius: '15px' }}>
           <h5 className="mb-3">Add a Roommate and their Task:</h5>
           <form className="mb-4">

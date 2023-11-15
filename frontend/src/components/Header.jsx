@@ -1,23 +1,27 @@
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import logo from '../img/logo.png';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
 
 function Header(props) {
   return (
-    <Navbar bg="dark" variant="dark">
+
+    <Navbar variant="dark" style={{backgroundColor: 'rgb(13, 110, 253)'}}>
       <div className="container-fluid d-flex justify-content-between align-items-center">
         <Navbar.Brand>
-          <img src="./img/logo.png" className="img-fluid" alt="Responsive image" />
+          <img src={logo} className="img-fluid logo-size" alt="Responsive image" />
         </Navbar.Brand>
         <Nav className="d-flex">
           <Link to="/home" className="me-2">
-            <button type="button" className="btn btn-secondary">
-              Zurück
+            <button type="button" className="btn-lg btn btn-primary">
+            Zurück <i class="bi bi-box-arrow-left"></i>
             </button>
           </Link>
           <Link to="/login">
-            <button type="button" className="btn btn-secondary">
-              Logout
+            <button type="button" className="btn-lg btn btn-danger">
+            <i class="bi bi-box-arrow-left"></i>
             </button>
           </Link>
         </Nav>

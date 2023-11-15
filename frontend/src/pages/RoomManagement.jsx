@@ -79,7 +79,7 @@ function RoommateManagement() {
     <div>
       <Header text='WG Manager' />
       <div className="container my-5">
-        <h1 className="text-center mb-4">Roommate Management</h1>
+        <h1 className="text-center mb-4">Mitbewohnerverwaltung</h1>
         <div className="card p-4 shadow-sm" style={{ borderRadius: '15px' }}>
           <form onSubmit={handleSubmit}>
             <div className="form-row">

@@ -68,7 +68,7 @@ const HousePlan = () => {
     <div>
       <Header text="WG Manager" />
       <div className="container mt-3">
-        <h2>Haushaltsplan</h2>
+      <h1 className="text-center mb-4">Haushaltsplan</h1>
         <form onSubmit={(e) => { e.preventDefault(); postNewExpense();}}>
           <div className="form-group">
             <label>Zahler:</label>
