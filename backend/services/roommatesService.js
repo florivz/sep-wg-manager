@@ -10,8 +10,9 @@ const getAllRoommates = async () => {
 };
 
 const getRoommateById = async (id) => {
+  id = parseInt(id);
   try {
-    const result = await pool.query('SELECT * FROM roommates WHERE PersonID = $1', [id]);
+    const result = await pool.query('SELECT * FROM roommates WHERE roommateid = $1', [id]);
     return result.rows[0];
   } catch (err) {
     throw err;
@@ -28,6 +29,7 @@ const addNewRoommate = async (firstname, lastname, email) => {
 };
 
 const deleteRoommate = async (id) => {
+  id = parseInt(id);
   try {
     id = parseInt(id);
     const result = await pool.query('DELETE FROM roommates WHERE roommateid = $1', [id]);
