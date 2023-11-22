@@ -26,7 +26,7 @@ function RoommateManagement() {
   };
 
   useEffect(() => {
-    axios.get('http://localhost:5001/api/getAllRoommates', {
+    axios.get('http://localhost:5001/api/roommates', {
       firstname: firstname,
       lastname: lastname,
       email: email
@@ -40,7 +40,7 @@ function RoommateManagement() {
   }, []);
 
   const fetchRoommates = () => {
-    axios.get('http://localhost:5001/api/getAllRoommates')
+    axios.get('http://localhost:5001/api/roommates')
       .then((response) => {
         setRoommates(response.data);
         console.log(response.data);
@@ -51,7 +51,7 @@ function RoommateManagement() {
   };
 
   const deleteRoommate = (id) => {
-    axios.delete(`http://localhost:5001/api/deleteRoommate/${id}`,
+    axios.delete(`http://localhost:5001/api/roommates/${id}`,
     )
       .then((response) => {
         fetchRoommates();
@@ -62,7 +62,7 @@ function RoommateManagement() {
   }
 
   const addNewRoommate = (firstname, lastname, email) => {
-    axios.post('http://localhost:5001/api/addNewRoommate', {
+    axios.post('http://localhost:5001/api/roommates', {
       firstname: firstname,
       lastname: lastname,
       email: email
@@ -84,7 +84,7 @@ function RoommateManagement() {
           <form onSubmit={handleSubmit}>
             <div className="form-row">
               <div className="form-group col-md-4">
-                <label htmlFor="firstname">First Name:</label>
+                <label htmlFor="firstname">Vorname:</label>
                 <input
                   type="text"
                   className="form-control"
@@ -95,7 +95,7 @@ function RoommateManagement() {
                 />
               </div>
               <div className="form-group col-md-4">
-                <label htmlFor="lastname">Last Name:</label>
+                <label htmlFor="lastname">Nachname:</label>
                 <input
                   type="text"
                   className="form-control"
@@ -120,9 +120,9 @@ function RoommateManagement() {
             <button type="submit" className="btn btn-primary" style={{ marginTop: "20px", marginBottom: "20px" }}
               onClick={() => addNewRoommate(newRoommate.firstname, newRoommate.lastname, newRoommate.email)}
             >
-              Add Roommate
+              Hinzufügen
             </button>
-            <h4>Number of Roommates: {roommates.length}</h4>
+            <h4>Anzahl der Mitbewohner/innen: {roommates.length}</h4>
           </form>
 
           <ul className="list-group mt-4">
@@ -138,7 +138,7 @@ function RoommateManagement() {
                   className="btn btn-danger btn-sm"
                   onClick={() => deleteRoommate(roommate.roommateid)}
                 >
-                  Remove
+                  Entfernen
                 </button>
               </li>
             ))}

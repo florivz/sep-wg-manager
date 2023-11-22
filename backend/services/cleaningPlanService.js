@@ -19,18 +19,14 @@ const deleteCleaningTask = async (taskid) => {
     }
 };
 
-const addCleaningTask = async (roommateId, task) => {
+const addCleaningTask = async (task, roommateid) => {
     try {
-      const query = 'INSERT INTO cleaningtasks (roommateid, task) VALUES ($1, $2)';
-      const result = await pool.query(query, [roommateId, task]);
+      const query = 'INSERT INTO cleaningtasks (task, roommateid) VALUES ($1, $2)';
+      const result = await pool.query(query, [task, roommateid]);
       return result;
     } catch (error) {
       throw error;
     }
-  };
-  
-  module.exports = {
-    addCleaningTask,
   };
 
 module.exports = {

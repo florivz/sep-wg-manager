@@ -1,9 +1,9 @@
 const express = require('express')
-const { getAllDebts, getAllExpenses, postNewDebt, postNewExpense } = require('../services/housePlanService')
+const { getAllDebts, getAllExpenses, postNewDebt, postNewExpense } = require('../services/budgetService')
 const router = express.Router();
 
 router.get(
-    '/getAllDebts', async (req, res) => {
+    '/debts', async (req, res) => {
         try {
             const debts = await getAllDebts();
             res.json(debts);
@@ -14,7 +14,7 @@ router.get(
 );
 
 router.get(
-    '/getAllExpenses', async (req, res) => {
+    '/expenses', async (req, res) => {
         try {
             const exepenses = await getAllExpenses();
             res.json(exepenses);
@@ -25,7 +25,7 @@ router.get(
 )
 
 router.post(
-    '/postNewExpense', async (req, res) => {
+    '/debts', async (req, res) => {
         const {roommateid, amount, description } = req.body;
         try {
             const expense = await postNewExpense(roommateid, amount, description);

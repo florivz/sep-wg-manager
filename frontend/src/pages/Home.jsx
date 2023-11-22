@@ -20,7 +20,7 @@ function Home() {
                         <Link to="/shoppinglist" className="menu-link">
                             <button type="button" className="btn btn-primary btn-menu">Einkaufsliste</button>
                         </Link>
-                        <Link to="/houseplan" className="menu-link">
+                        <Link to="/budget" className="menu-link">
                             <button type="button" className="btn btn-primary btn-menu">Haushaltsplan</button>
                         </Link>
                         <Link to="/roommanagement" className="menu-link">

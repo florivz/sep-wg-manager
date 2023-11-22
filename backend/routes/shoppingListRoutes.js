@@ -7,7 +7,7 @@ const {
 } = require('../services/shoppingListService');
 const router = express.Router();
 
-router.get('/getShoppingList', async (req, res) => {
+router.get('/shopping-items', async (req, res) => {
   try {
     const shoppingList = await getShoppingList();
     res.json(shoppingList);
@@ -16,7 +16,7 @@ router.get('/getShoppingList', async (req, res) => {
   }
 });
 
-router.get('/deleteShoppingListItem/:itemID', async (req, res) => {
+router.delete('/shopping-items/:itemID', async (req, res) => {
   const itemID = parseInt(req.params.itemID);
   try {
     const result = await deleteShoppingListItem(itemID);
@@ -30,7 +30,7 @@ router.get('/deleteShoppingListItem/:itemID', async (req, res) => {
   }
 });
 
-router.post('/addShoppingListItem', async (req, res) => {
+router.post('/shopping-items', async (req, res) => {
   const { itemname } = req.body;
   try {
     const newItem = await addShoppingListItem(itemname);
@@ -40,7 +40,7 @@ router.post('/addShoppingListItem', async (req, res) => {
   }
 });
 
-router.get('/getItems', async (req, res) => {
+router.get('/shopping-items', async (req, res) => {
   try {
     const items = await getItems();
     res.json(items);

@@ -3,7 +3,7 @@ const { getAllCleaningTasks, addCleaningTask, deleteCleaningTask } = require('..
 const router = express.Router();
 
 router.get(
-    '/getAllCleaningTasks',
+    '/cleaning-tasks',
     async (req, res) => {
         try {
             const cleaningtasks = await getAllCleaningTasks();
@@ -14,7 +14,7 @@ router.get(
     }
 )
 
-router.get('/deleteCleaningTask/:taskID', async (req, res) => {
+router.delete('/cleaning-tasks/:taskID', async (req, res) => {
     const taskid = parseInt(req.params.taskID);
     try {
         const result = await deleteCleaningTask(taskid);
@@ -28,10 +28,10 @@ router.get('/deleteCleaningTask/:taskID', async (req, res) => {
     }
 });
 
-router.post('/addCleaningTask', async (req, res) => {
-    const { roommateId, task } = req.body;
+router.post('/cleaning-tasks', async (req, res) => {
+    const { task, roommateid } = req.body;
     try {
-        const result = await addCleaningTask(roommateId, task);
+        const result = await addCleaningTask(task, roommateid);
         res.json({ message: 'Task successfully added.' });
     } catch (err) {
         console.error('Error while adding task:', err);

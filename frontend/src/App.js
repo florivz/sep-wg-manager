@@ -1,10 +1,9 @@
-// App.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute'; 
 import Home from './pages/Home';
 import CleaningPlan from './pages/CleaningPlan';
-import HousePlan from './pages/HousePlan';
+import Budget from './pages/Budget';
 import RoomManagement from './pages/RoomManagement';
 import ShoppingList from './pages/ShoppingList';
 import Login from './pages/Login';
@@ -36,10 +35,10 @@ function App() {
                           } 
                         />
                         <Route 
-                          path="/houseplan" 
+                          path="/budget" 
                           element={
                             <ProtectedRoute>
-                              <HousePlan />
+                              <Budget />
                             </ProtectedRoute>
                           } 
                         />

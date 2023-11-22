@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from '../components/Header';
 import axios from 'axios';
 
-const HousePlan = () => {
+const Budget = () => {
   const [expenses, setExpenses] = useState([]);
   const [payer, setPayer] = useState('');
   const [description, setDescription] = useState('');
@@ -15,7 +15,7 @@ const HousePlan = () => {
   const [roommateNames, setRoommateNames] = useState({});
 
   useEffect(() => {
-    axios.get('http://localhost:5001/api/getAllRoommates')
+    axios.get('http://localhost:5001/api/roommates')
       .then((response) => {
         setRoommates(response.data);
       })
@@ -23,7 +23,7 @@ const HousePlan = () => {
         console.error(error);
       });
 
-    axios.get('http://localhost:5001/api/getAllDebts')
+    axios.get('http://localhost:5001/api/debts')
       .then((response) => {
         setDebts(response.data);
       })
@@ -31,7 +31,7 @@ const HousePlan = () => {
         console.error(error);
       });
 
-    axios.get('http://localhost:5001/api/getAllExpenses')
+    axios.get('http://localhost:5001/api/expenses')
       .then((response) => {
         setExpenses(response.data);
         console.log(expenses);
@@ -51,7 +51,7 @@ const HousePlan = () => {
       amount: amount,
       description: description
     }
-    axios.post('http://localhost:5001/api/postNewExpense', newExpense)
+    axios.post('http://localhost:5001/api/expenses', newExpense)
       .then(() => {
         console.log(newExpense.roommateid, newExpense.amount, newExpense.description)
       }
@@ -107,4 +107,4 @@ const HousePlan = () => {
   );
 };
 
-export default HousePlan;
+export default Budget;
