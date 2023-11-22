@@ -3,7 +3,7 @@ require('dotenv').config();
 const cors = require('cors');
 const roommatesRoutes = require('./routes/roommatesRoutes');
 const shoppingListRoutes = require('./routes/shoppingListRoutes');
-const housePlanRoutes = require('./routes/housePlanRoutes');
+const budgetRoutes = require('./routes/budgetRoutes');
 const cleaningPlanRoutes = require('./routes/cleaningPlanRoutes');
 const loginRoutes = require('./routes/loginRoutes');
 
@@ -22,8 +22,8 @@ app.use('/api', roommatesRoutes);
 // Shopping List Routes
 app.use('/api', shoppingListRoutes);
 
-// House Plan Routes
-app.use('/api', housePlanRoutes);
+// Budget Routes
+app.use('/api', budgetRoutes);
 
 // Cleaning Plan Routes
 app.use('/api', cleaningPlanRoutes);

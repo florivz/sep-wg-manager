@@ -12,7 +12,7 @@ const ShoppingList = () => {
   }, []);
 
   const fetchItems = () => {
-    axios.get('http://localhost:5001/api/getItems')
+    axios.get('http://localhost:5001/api/shopping-items')
       .then(response => {
         setItems(response.data);
       })
@@ -24,7 +24,7 @@ const ShoppingList = () => {
   const addItem = () => {
     if (newItem.trim() !== '') {
       const newItemObject = { itemname: newItem.trim() };
-      axios.post('http://localhost:5001/api/addShoppingListItem', newItemObject)
+      axios.post('http://localhost:5001/api/shopping-items', newItemObject)
         .then(response => {
           setItems([...items, response.data]);
           setNewItem('');
@@ -38,7 +38,7 @@ const ShoppingList = () => {
   const removeItem = (itemId) => {
     const parsedItemId = parseInt(itemId, 10);
     console.log(parsedItemId);
-    axios.get(`http://localhost:5001/api/deleteShoppingListItem/${parsedItemId}`)
+    axios.delete(`http://localhost:5001/api/shopping-items/${parsedItemId}`)
       .then(response => {
         setItems(items.filter(item => item.itemid !== parsedItemId));
         console.log(`Item with ID: ${parsedItemId} has been deleted.`);

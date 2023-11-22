@@ -3,7 +3,7 @@ const { getAllRoommates, addNewRoommate, deleteRoommate, getRoommateById } = req
 const router = express.Router();
 
 router.get(
-    '/getAllRoommates',
+    '/roommates',
     async (req, res) => {
         try {
             const roommates = await getAllRoommates();
@@ -14,7 +14,7 @@ router.get(
     });
 
 router.get(
-    '/getRoommate/:id',
+    '/roommates/:id',
     async (req, res) => {
         const roommateid = parseInt(req.params.id);
         try {
@@ -27,7 +27,7 @@ router.get(
 )
 
 router.post(
-    '/addNewRoommate',
+    '/roommates',
     async (req, res) => {
         const { firstname, lastname, email } = req.body;
         try {
@@ -40,7 +40,7 @@ router.post(
 );
 
 router.delete(
-    '/deleteRoommate/:id',
+    '/roommates/:id',
     async (req, res) => {
         const id = req.params.id
         try {

@@ -16,12 +16,12 @@ function Header(props) {
         <Nav className="d-flex">
           <Link to="/home" className="me-2">
             <button type="button" className="btn-lg btn btn-primary">
-            Zurück <i class="bi bi-box-arrow-left"></i>
+            Zurück <i className="bi bi-box-arrow-left"></i>
             </button>
           </Link>
           <Link to="/login">
             <button type="button" className="btn-lg btn btn-danger">
-            <i class="bi bi-box-arrow-left"></i>
+            <i className="bi bi-box-arrow-left"></i>
             </button>
           </Link>
         </Nav>
