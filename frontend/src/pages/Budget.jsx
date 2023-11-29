@@ -59,17 +59,17 @@ const Budget = () => {
   }
 
   const getRoommate = (id) => {
-      const roommate = roommates.find((roommate) => roommate.roommateid === id);
-      console.log(roommate.firstname);
-      return roommate.firstname;
+    const roommate = roommates.find((roommate) => roommate.roommateid === id);
+    console.log(roommate.firstname);
+    return roommate.firstname;
   }
 
   return (
     <div>
       <Header text="WG Manager" />
       <div className="container mt-3">
-      <h1 className="text-center mb-4">Haushaltsplan</h1>
-        <form onSubmit={(e) => { e.preventDefault(); postNewExpense();}}>
+        <h1 className="text-center mb-4">Haushaltsplan</h1>
+        <form onSubmit={(e) => { e.preventDefault(); postNewExpense(); }}>
           <div className="form-group">
             <label>Zahler:</label>
             <select type="text" className="form-control" value={payer} onChange={(e) => setPayer(e.target.value)} >
@@ -93,15 +93,11 @@ const Budget = () => {
         </form>
         <hr />
         <h3>Ausgaben:</h3>
-        {expenses.map((expense) => (
+        {expenses.slice(0, 10).map((expense) => (
           <p key={expense.expenseid}>
             {getRoommate(expense.roommateid)} hat {expense.amount}€ für {expense.description} ausgegeben.
           </p>
         ))}
-        <hr />
-        <h3>Schuldverhältnisse:</h3>
-        <ul className="list-group">
-        </ul>
       </div>
     </div>
   );

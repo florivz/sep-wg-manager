@@ -9,6 +9,7 @@ import ShoppingList from './pages/ShoppingList';
 import Login from './pages/Login';
 import { AuthProvider } from './contexts/AuthContext';
 import { RoommateProvider } from './contexts/RoommateContext';
+import Register from './pages/Register';
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                     <Routes>
                         <Route path="/login" element={<Login />} />
                         <Route path="/" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
                         <Route 
                           path="/home" 
                           element={

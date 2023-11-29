@@ -29,11 +29,12 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@svgr/plugin-svgo": "latest",
     "@svgr/webpack": "latest",
     "css-select": "latest",
     "postcss": "latest",
     "react-scripts": "latest",
     "svgo": "latest"
-  }  
+  }
 }

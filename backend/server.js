@@ -6,6 +6,7 @@ const shoppingListRoutes = require('./routes/shoppingListRoutes');
 const budgetRoutes = require('./routes/budgetRoutes');
 const cleaningPlanRoutes = require('./routes/cleaningPlanRoutes');
 const loginRoutes = require('./routes/loginRoutes');
+const registerRoute = require('./routes/registerRoute');
 
 const app = express();
 
@@ -28,6 +29,8 @@ app.use('/api', budgetRoutes);
 // Cleaning Plan Routes
 app.use('/api', cleaningPlanRoutes);
 
+// Register Routes
+app.use('/api', registerRoute);
 
 // Testroute
 app.get('/serverstatus', (req, res) => {
