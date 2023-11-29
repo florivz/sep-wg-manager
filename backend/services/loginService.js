@@ -1,4 +1,5 @@
 const pool = require('../db/connection');
+const bcrypt = require('bcrypt')
 
 const loginService = async (username, plaintextPassword) => {
     try {
@@ -7,8 +8,8 @@ const loginService = async (username, plaintextPassword) => {
 
         if (result.rows.length > 0) {
             const user = result.rows[0];
-
-            if (plaintextPassword === user.password) {
+            const passwordMatch = await bcrypt.compare(plaintextPassword, user.password);
+            if (passwordMatch) {
                 return user;
             } else {
                 throw new Error('Passwort stimmt nicht überein');
