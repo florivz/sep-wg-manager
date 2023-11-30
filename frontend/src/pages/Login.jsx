@@ -1,34 +1,49 @@
 import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import Header from '../components/Header'
+import Header from '../components/Header';
 
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [loginResponse, setLoginResponse] = useState('');
+    const [loginError, setLoginError] = useState('');
     const navigate = useNavigate();
     const { login } = useAuth();
 
+    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         try {
+            // Send a POST request to the server for login
             const response = await axios.post('http://localhost:5001/api/login', {
                 username,
-                password
+                password,
             });
+
+            // Check if the response status is 200 (OK)
             if (response.status === 200) {
+                // If successful, log the user in and navigate to the home page
                 login(response.data);
                 navigate('/home');
             } else {
-                setLoginResponse('Login fehlgeschlagen: Ungültiger Statuscode');
+                // If the status code is not 200, set an error message
+                setLoginError('Login failed: Invalid status code');
             }
         } catch (error) {
-            setLoginResponse(error.response ? error.response.data : 'Login fehlgeschlagen: Netzwerkfehler');
+            // Handle errors that occur during the API request
+            if (error.response) {
+                // If the server responds with an error message, set it as the error
+                setLoginError(error.response.data);
+            } else {
+                // If there's a network error or other unhandled error, set a generic error message
+                setLoginError('Login failed: Network error');
+            }
+            // Log the error to the console for debugging purposes
             console.error(error);
-            window.alert('Login fehlgeschlagen: Benutzername oder Passwort falsch');
+            // Display an alert to the user with a generic error message
+            window.alert('Login failed: Incorrect username or password');
         }
     };
 
@@ -44,7 +59,7 @@ function Login() {
                             <div className="card-body">
                                 <form onSubmit={handleSubmit}>
                                     <div className="form-group">
-                                        <label>Benutzername:</label>
+                                        <label>Nutzername:</label>
                                         <input
                                             type="text"
                                             className="form-control"
@@ -63,11 +78,18 @@ function Login() {
                                             required
                                         />
                                     </div>
-                                    <button type="submit" className="btn btn-primary mt-2">Login</button>
+                                    <button type="submit" className="btn btn-primary mt-2">
+                                        Login
+                                    </button>
                                 </form>
                             </div>
                         </div>
-                        <button className='btn btn-info mt-2 col-md-12' onClick={() => navigate('/register')}>Registrieren</button>
+                        <button
+                            className="btn btn-info mt-2 col-md-12"
+                            onClick={() => navigate('/register')}
+                        >
+                            Registrieren
+                        </button>
                     </div>
                 </div>
             </div>

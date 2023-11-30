@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { useRoommates } from '../contexts/RoommateContext';
 import home_bg from '../img/home_bg.jpg';
-//import './Home.css'; // Importiere die CSS-Datei
 
 function Home() {
     return (

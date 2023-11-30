@@ -6,46 +6,47 @@ import axios from 'axios';
 const ShoppingList = () => {
   const [newItem, setNewItem] = useState('');
   const [items, setItems] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchItems();
   }, []);
 
-  const fetchItems = () => {
-    axios.get('http://localhost:5001/api/shopping-items')
-      .then(response => {
-        setItems(response.data);
-      })
-      .catch(error => {
-        console.log('Error occurred', error);
-      });
-  };
-
-  const addItem = () => {
-    if (newItem.trim() !== '') {
-      const newItemObject = { itemname: newItem.trim() };
-      axios.post('http://localhost:5001/api/shopping-items', newItemObject)
-        .then(response => {
-          setItems([...items, response.data]);
-          setNewItem('');
-        })
-        .catch(error => {
-          console.log('Error occurred while adding item:', error);
-        });
+  // Fetch shopping items from the server
+  const fetchItems = async () => {
+    try {
+      const response = await axios.get('http://localhost:5001/api/shopping-items');
+      setItems(response.data);
+    } catch (error) {
+      console.error('Error occurred while fetching items:', error);
+      setError('Failed to fetch items.');
     }
   };
 
-  const removeItem = (itemId) => {
+  // Add a new shopping item
+  const addItem = async () => {
+    if (newItem.trim() !== '') {
+      const newItemObject = { itemname: newItem.trim() };
+      try {
+        const response = await axios.post('http://localhost:5001/api/shopping-items', newItemObject);
+        setItems([...items, response.data]);
+        setNewItem('');
+      } catch (error) {
+        console.error('Error occurred while adding item:', error);
+      }
+    }
+  };
+
+  // Remove a shopping item
+  const removeItem = async (itemId) => {
     const parsedItemId = parseInt(itemId, 10);
-    console.log(parsedItemId);
-    axios.delete(`http://localhost:5001/api/shopping-items/${parsedItemId}`)
-      .then(response => {
-        setItems(items.filter(item => item.itemid !== parsedItemId));
-        console.log(`Item with ID: ${parsedItemId} has been deleted.`);
-      })
-      .catch(error => {
-        console.log('Error occurred while deleting item:', error);
-      });
+    try {
+      await axios.delete(`http://localhost:5001/api/shopping-items/${parsedItemId}`);
+      setItems(items.filter(item => item.itemid !== parsedItemId));
+      console.log(`Item with ID: ${parsedItemId} has been deleted.`);
+    } catch (error) {
+      console.error('Error occurred while deleting item:', error);
+    }
   };
 
   return (
@@ -58,7 +59,7 @@ const ShoppingList = () => {
             <input
               type="text"
               className="form-control"
-              placeholder="Add new item"
+              placeholder="Item hinzufügen"
               value={newItem}
               onChange={(e) => setNewItem(e.target.value)}
             />
@@ -68,14 +69,18 @@ const ShoppingList = () => {
                 type="button"
                 onClick={addItem}
                 disabled={!newItem.trim()}
-                title={newItem.trim() ? '' : 'Please enter an item to add'}
+                title={newItem.trim() ? '' : 'Please select an item to add'}
                 style={{ marginLeft: "15px" }}
               >
                 <FaPlus />
               </button>
             </div>
           </div>
-          {items.length > 0 ? (
+          {error ? (
+            <div className="alert alert-danger" role="alert">
+              {error}
+            </div>
+          ) : items.length > 0 ? (
             <ul className="list-group">
               {items.map((item) => (
                 <li key={item.itemid} className="list-group-item d-flex justify-content-between align-items-center">
@@ -90,7 +95,7 @@ const ShoppingList = () => {
               ))}
             </ul>
           ) : (
-            <div className="text-center mt-3 text-muted">Your shopping list is empty. Add some items!</div>
+            <div className="text-center mt-3 text-muted">Die Einkaufslist ist momentan leer.</div>
           )}
         </div>
       </div>
