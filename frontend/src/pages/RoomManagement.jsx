@@ -12,72 +12,65 @@ function RoommateManagement() {
     email: ''
   });
 
+  // Handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
     if (newRoommate.firstname && newRoommate.lastname && newRoommate.email) {
-      setRoommates([...roommates, newRoommate]);
-      setNewRoommate({
-        roommateid: '',
-        firstname: '',
-        lastname: '',
-        email: ''
-      });
+      addNewRoommate(newRoommate.firstname, newRoommate.lastname, newRoommate.email);
     }
   };
 
+  // Fetch roommates data on component mount
   useEffect(() => {
-    axios.get('http://localhost:5001/api/roommates', {
-      firstname: firstname,
-      lastname: lastname,
-      email: email
-    })
-      .then((response) => {
-        setRoommates(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    fetchRoommates();
   }, []);
 
+  // Fetch roommates data from the API
   const fetchRoommates = () => {
     axios.get('http://localhost:5001/api/roommates')
       .then((response) => {
         setRoommates(response.data);
-        console.log(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   };
 
+  // Delete a roommate by ID
   const deleteRoommate = (id) => {
-    axios.delete(`http://localhost:5001/api/roommates/${id}`,
-    )
-      .then((response) => {
+    axios.delete(`http://localhost:5001/api/roommates/${id}`)
+      .then(() => {
         fetchRoommates();
       })
-      .catch((err) => {
-        console.log(err)
+      .catch((error) => {
+        console.error(error);
       });
   }
 
+  // Add a new roommate
   const addNewRoommate = (firstname, lastname, email) => {
     axios.post('http://localhost:5001/api/roommates', {
       firstname: firstname,
       lastname: lastname,
       email: email
     })
-      .then((response) => {
+      .then(() => {
         fetchRoommates();
+        // Clear the form
+        setNewRoommate({
+          firstname: '',
+          lastname: '',
+          email: ''
+        });
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   }
 
   return (
     <div>
-      <Header text='WG Manager' />
+      <Header text='Roommate Manager' />
       <div className="container my-5">
         <h1 className="text-center mb-4">Mitbewohnerverwaltung</h1>
         <div className="card p-4 shadow-sm" style={{ borderRadius: '15px' }}>
@@ -117,17 +110,15 @@ function RoommateManagement() {
                 />
               </div>
             </div>
-            <button type="submit" className="btn btn-primary" style={{ marginTop: "20px", marginBottom: "20px" }}
-              onClick={() => addNewRoommate(newRoommate.firstname, newRoommate.lastname, newRoommate.email)}
-            >
+            <button type="submit" className="btn btn-primary" style={{ marginTop: "20px", marginBottom: "20px" }}>
               Hinzufügen
             </button>
-            <h4>Anzahl der Mitbewohner/innen: {roommates.length}</h4>
+            <h4>Anzahl Mitbewohner/innen: {roommates.length}</h4>
           </form>
 
           <ul className="list-group mt-4">
-            {roommates.map((roommate, index) => (
-              <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
+            {roommates.map((roommate) => (
+              <li key={roommate.roommateid} className="list-group-item d-flex justify-content-between align-items-center">
                 <div>
                   <span>ID: {roommate.roommateid}</span> <br />
                   <span>Vorname: {roommate.firstname}</span> <br />
