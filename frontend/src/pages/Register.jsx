@@ -19,6 +19,14 @@ function Register() {
         e.preventDefault();
 
         try {
+            // Check if the username already exists in the database
+            const checkUsernameResponse = await axios.get(`http://localhost:5001/api/${username}`);
+
+            if (checkUsernameResponse.data.exists) {
+                setRegisterResponse('Username already exists');
+                return;
+            }
+
             // Send a POST request to the server for user registration
             const response = await axios.post('http://localhost:5001/api/user', {
                 username,

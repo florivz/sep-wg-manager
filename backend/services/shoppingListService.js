@@ -2,13 +2,14 @@ const pool = require('../db/connection');
 
 /**
  * Retrieves the entire shopping list from the database.
+ * @param {string} username - The shared apartment this items belong to.
  * @returns {Promise<Array>} Array of shopping list items.
  * @throws {Error} If there's an issue with the database query.
  */
-const getShoppingList = async () => {
+const getShoppingList = async (username) => {
   try {
-    const query = 'SELECT * FROM shoppinglist';
-    const result = await pool.query(query);
+    const query = 'SELECT * FROM shoppinglist WHERE username = $1';
+    const result = await pool.query(query, [username]);
     return result.rows;
   } catch (error) {
     throw error;
@@ -34,13 +35,14 @@ const deleteShoppingListItem = async (itemid) => {
 /**
  * Adds a new shopping list item with the specified name.
  * @param {string} itemname - The name of the item to be added.
+ * @param {string} username - The shared apartment this items belong to.
  * @returns {Promise<Object>} The added shopping list item.
  * @throws {Error} If there's an issue with the database query.
  */
-const addShoppingListItem = async (itemname) => {
+const addShoppingListItem = async (itemname, username) => {
   try {
-    const query = 'INSERT INTO shoppinglist (ItemName) VALUES ($1) RETURNING *';
-    const result = await pool.query(query, [itemname]);
+    const query = 'INSERT INTO shoppinglist (ItemName, username) VALUES ($1, $2) RETURNING *';
+    const result = await pool.query(query, [itemname, username]);
     return result.rows[0];
   } catch (error) {
     throw error;

@@ -2,12 +2,13 @@ const pool = require('../db/connection');
 
 /**
  * Retrieve all roommates from the database.
+ * @param {string} username - The roommates are binded to a shared apartment.
  * @returns {Promise<Array>} A promise that resolves to an array of roommates.
  * @throws {Error} If there's an issue with the database query.
  */
-const getAllRoommates = async () => {
+const getAllRoommates = async (username) => {
   try {
-    const result = await pool.query('SELECT * FROM roommates');
+    const result = await pool.query('SELECT * FROM roommates WHERE username = $1', [username]);
     return result.rows;
   } catch (error) {
     throw error;
@@ -35,12 +36,13 @@ const getRoommateById = async (id) => {
  * @param {string} firstname - The first name of the new roommate.
  * @param {string} lastname - The last name of the new roommate.
  * @param {string} email - The email address of the new roommate.
+ * @param {string} username - The roommates are binded to a shared apartment.
  * @returns {Promise} A promise that resolves when the roommate is added successfully.
  * @throws {Error} If there's an issue with the database query.
  */
-const addNewRoommate = async (firstname, lastname, email) => {
+const addNewRoommate = async (firstname, lastname, email, username) => {
   try {
-    await pool.query('INSERT INTO roommates (firstname, lastname, email) VALUES ($1, $2, $3)', [firstname, lastname, email]);
+    await pool.query('INSERT INTO roommates (firstname, lastname, email, username) VALUES ($1, $2, $3, $4)', [firstname, lastname, email, username]);
   } catch (error) {
     throw error;
   }

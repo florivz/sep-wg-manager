@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { FaPlus, FaTrash } from 'react-icons/fa';
 import Header from '../components/Header';
 import axios from 'axios';
+import { useAuth } from '../contexts/AuthContext';
 
 const ShoppingList = () => {
   const [newItem, setNewItem] = useState('');
   const [items, setItems] = useState([]);
   const [error, setError] = useState(null);
+  const username = useAuth().user.user.username;
 
   useEffect(() => {
     fetchItems();
@@ -15,7 +17,8 @@ const ShoppingList = () => {
   // Fetch shopping items from the server
   const fetchItems = async () => {
     try {
-      const response = await axios.get('http://localhost:5001/api/shopping-items');
+      console.log("fetching items")
+      const response = await axios.get(`http://localhost:5001/api/shopping-items/${username}`);
       setItems(response.data);
     } catch (error) {
       console.error('Error occurred while fetching items:', error);
@@ -26,7 +29,10 @@ const ShoppingList = () => {
   // Add a new shopping item
   const addItem = async () => {
     if (newItem.trim() !== '') {
-      const newItemObject = { itemname: newItem.trim() };
+      const newItemObject = { 
+        itemname: newItem.trim(), 
+        username: username 
+      };
       try {
         const response = await axios.post('http://localhost:5001/api/shopping-items', newItemObject);
         setItems([...items, response.data]);
@@ -43,7 +49,6 @@ const ShoppingList = () => {
     try {
       await axios.delete(`http://localhost:5001/api/shopping-items/${parsedItemId}`);
       setItems(items.filter(item => item.itemid !== parsedItemId));
-      console.log(`Item with ID: ${parsedItemId} has been deleted.`);
     } catch (error) {
       console.error('Error occurred while deleting item:', error);
     }

@@ -20,9 +20,10 @@ router.get('/debts', async (req, res) => {
 });
 
 // Route to get all expenses
-router.get('/expenses', async (req, res) => {
+router.get('/expenses/:username', async (req, res) => {
+  const { username } = req.params;
   try {
-    const expenses = await getAllExpenses();
+    const expenses = await getAllExpenses(username);
     res.json(expenses);
   } catch (error) {
     // Throw the error, as there is no specific handling here
@@ -32,9 +33,9 @@ router.get('/expenses', async (req, res) => {
 
 // Route to post a new expense
 router.post('/expenses', async (req, res) => {
-  const { roommateid, amount, description } = req.body;
+  const { roommateid, amount, description, username } = req.body;
   try {
-    const expense = await postNewExpense(roommateid, amount, description);
+    const expense = await postNewExpense(roommateid, amount, description, username);
     res.json(expense);
   } catch (error) {
     // Throw the error, as there is no specific handling here

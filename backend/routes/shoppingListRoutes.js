@@ -8,9 +8,10 @@ const {
 } = require('../services/shoppingListService');
 
 // Get shopping list items
-router.get('/shopping-items', async (req, res) => {
+router.get('/shopping-items/:username', async (req, res) => {
+  const { username } = req.params;
   try {
-    const shoppingList = await getShoppingList();
+    const shoppingList = await getShoppingList(username);
     res.json(shoppingList);
   } catch (err) {
     console.error('Error while fetching shopping list:', err);
@@ -35,9 +36,9 @@ router.delete('/shopping-items/:itemID', async (req, res) => {
 
 // Add a new shopping list item
 router.post('/shopping-items', async (req, res) => {
-  const { itemname } = req.body;
+  const { itemname, username } = req.body;
   try {
-    const newItem = await addShoppingListItem(itemname);
+    const newItem = await addShoppingListItem(itemname, username);
     res.json(newItem);
   } catch (err) {
     console.error('Error while adding item:', err);
