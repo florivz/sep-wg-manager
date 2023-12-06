@@ -1,8 +1,19 @@
 const express = require('express');
-const { addUser } = require('../services/registerService');
+const { addUser, checkUsernameExists } = require('../services/registerService');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+
+// Endpoint to check if user already exists
+router.get('/:username', async (req, res) => {
+    try {
+        const { username } = req.params;
+        const exists = await checkUsernameExists(username);
+        res.status(200).json({ exists });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 
 router.post(
     '/user',

@@ -2,21 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { useRoommates } from '../contexts/RoommateContext.js';
 import Header from '../components/Header';
 import axios from 'axios';
+import { useAuth } from '../contexts/AuthContext.js';
 
 function RoommateManagement() {
   const { roommates, setRoommates } = useRoommates();
+  const username = useAuth().user.user.username;
 
   const [newRoommate, setNewRoommate] = useState({
     firstname: '',
     lastname: '',
-    email: ''
+    email: '',
+    username: ''
   });
 
   // Handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
     if (newRoommate.firstname && newRoommate.lastname && newRoommate.email) {
-      addNewRoommate(newRoommate.firstname, newRoommate.lastname, newRoommate.email);
+      addNewRoommate(newRoommate.firstname, newRoommate.lastname, newRoommate.email, username);
     }
   };
 
@@ -27,7 +30,7 @@ function RoommateManagement() {
 
   // Fetch roommates data from the API
   const fetchRoommates = () => {
-    axios.get('http://localhost:5001/api/roommates')
+    axios.get(`http://localhost:5001/api/roommates/${username}`)
       .then((response) => {
         setRoommates(response.data);
       })
@@ -48,11 +51,12 @@ function RoommateManagement() {
   }
 
   // Add a new roommate
-  const addNewRoommate = (firstname, lastname, email) => {
+  const addNewRoommate = (firstname, lastname, email, username) => {
     axios.post('http://localhost:5001/api/roommates', {
       firstname: firstname,
       lastname: lastname,
-      email: email
+      email: email,
+      username: username
     })
       .then(() => {
         fetchRoommates();
@@ -60,7 +64,8 @@ function RoommateManagement() {
         setNewRoommate({
           firstname: '',
           lastname: '',
-          email: ''
+          email: '',
+          username: ''
         });
       })
       .catch((error) => {

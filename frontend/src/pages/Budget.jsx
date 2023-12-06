@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from '../components/Header';
 import axios from 'axios';
+import { useAuth } from '../contexts/AuthContext';
 
 const Budget = () => {
   // State variables
@@ -9,25 +10,26 @@ const Budget = () => {
   const [payer, setPayer] = useState('');
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
-  const [roommates, setRoommates] = useState([]);
+  const [roommates, setRoommates] = useState([]); // Initialize as an empty array
+  const username = useAuth().user.user.username;
 
   // Fetch roommates data on component mount
   useEffect(() => {
-    async function fetchRoommates() {
-      try {
-        const response = await axios.get('http://localhost:5001/api/roommates');
-        setRoommates(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
     fetchRoommates();
     fetchExpenses(); // Fetch expenses data
   }, []);
 
+  async function fetchRoommates() {
+    try {
+      const response = await axios.get(`http://localhost:5001/api/roommates/${username}`);
+      setRoommates(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   // Function to post a new expense
-  const postNewExpense = async (roommateId, amount, description) => {
+  const postNewExpense = async (roommateId, amount, description, username) => {
     try {
       roommateId = parseInt(roommateId);
       amount = parseFloat(amount);
@@ -35,6 +37,7 @@ const Budget = () => {
         roommateid: roommateId,
         amount: amount,
         description: description,
+        username: username
       };
       await axios.post('http://localhost:5001/api/expenses', newExpense);
       fetchExpenses(); // Refresh expenses data
@@ -46,7 +49,7 @@ const Budget = () => {
   // Function to fetch expenses data
   const fetchExpenses = async () => {
     try {
-      const response = await axios.get('http://localhost:5001/api/expenses');
+      const response = await axios.get(`http://localhost:5001/api/expenses/${username}`);
       setExpenses(response.data);
     } catch (error) {
       console.error(error);
@@ -63,11 +66,11 @@ const Budget = () => {
     }
   };
 
-  // Function to get roommate's full name
-  const getRoommateName = (id) => {
+// Function to get roommate's full name
+const getRoommateName = (id) => {
     const roommate = roommates.find((roommate) => roommate.roommateid === id);
     return roommate ? `${roommate.firstname} ${roommate.lastname}` : '';
-  };
+};
 
   return (
     <div>
@@ -77,7 +80,7 @@ const Budget = () => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            postNewExpense(payer, amount, description);
+            postNewExpense(payer, amount, description, username);
           }}
         >
           <div className="form-group">
@@ -89,14 +92,12 @@ const Budget = () => {
               onChange={(e) => setPayer(e.target.value)}
             >
               <option value="">Zahler auswählen</option>
-              {roommates.map((roommate) => (
-                <option
-                  key={roommate.roommateid}
-                  value={roommate.roommateid}
-                >
-                  {roommate.firstname} {roommate.lastname}
-                </option>
-              ))}
+              {
+                roommates.map((roommate) => (
+                  <option key={roommate.roommateid} value={roommate.roommateid}>
+                    {roommate.firstname} {roommate.lastname}
+                  </option>
+                ))}
             </select>
           </div>
           <div className="form-group">

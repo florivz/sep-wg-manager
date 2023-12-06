@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import axios from 'axios';
 import { FaTrash } from 'react-icons/fa';
+import { useAuth } from '../contexts/AuthContext';
 
 function CleaningSchedule() {
   const [tasks, setTasks] = useState([]);
   const [roommates, setRoommates] = useState([]);
   const [selectedRoommate, setSelectedRoommate] = useState('');
   const [taskText, setTaskText] = useState('');
+  const username =  useAuth().user.user.username;
 
   useEffect(() => {
     // Fetch cleaning tasks and roommates when the component mounts
@@ -17,7 +19,7 @@ function CleaningSchedule() {
 
   const fetchCleaningTasks = () => {
     try {
-      axios.get('http://localhost:5001/api/cleaning-tasks')
+      axios.get(`http://localhost:5001/api/cleaning-tasks/${username}`)
         .then((response) => {
           if (Array.isArray(response.data)) {
             // Update tasks state with fetched data
@@ -73,10 +75,10 @@ function CleaningSchedule() {
   const addTask = () => {
     try {
       if (selectedRoommate && taskText) {
-        console.log("addTask Selected Roommate:", selectedRoommate.roommateId);
         const newTask = {
           task: taskText,
           roommateId: selectedRoommate.roommateid,
+          username: username
         };
         axios
         .post('http://localhost:5001/api/cleaning-tasks', newTask)
