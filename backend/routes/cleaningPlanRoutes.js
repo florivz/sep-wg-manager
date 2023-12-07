@@ -1,12 +1,12 @@
 const express = require('express');
-const { getAllCleaningTasks, addCleaningTask, deleteCleaningTask } = require('../services/cleaningPlanService');
+const { getCleaningTasks, postCleaningTask, deleteCleaningTask } = require('../services/cleaningPlanService');
 const router = express.Router();
 
 // Route to get all cleaning tasks
 router.get('/cleaning-tasks/:username', async (req, res) => {
     const { username } = req.params;
     try {
-        const cleaningTasks = await getAllCleaningTasks(username);
+        const cleaningTasks = await getCleaningTasks(username);
         res.json(cleaningTasks);
     } catch (err) {
         console.error('Error while fetching cleaning tasks:', err);
@@ -33,7 +33,7 @@ router.delete('/cleaning-tasks/:taskID', async (req, res) => {
 router.post('/cleaning-tasks', async (req, res) => {
     const {task, roommateId, username} = req.body;
     try {
-        const result = await addCleaningTask(task, roommateId, username);
+        const result = await postCleaningTask(task, roommateId, username);
         res.json({ message: 'Task successfully added.' });
     } catch (err) {
         console.error('Error while adding task:', err);

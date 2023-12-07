@@ -6,6 +6,7 @@ import home_bg from '../img/home_bg.jpg';
 import { useAuth } from '../contexts/AuthContext';
 
 function Home() {
+    
 const username = useAuth().user.user.username;
 
     return (

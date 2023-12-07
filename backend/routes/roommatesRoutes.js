@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const {
-  getAllRoommates,
-  addNewRoommate,
+  getRoommates,
+  postRoommate,
   deleteRoommate,
   getRoommateById,
 } = require('../services/roommatesService');
@@ -11,7 +11,7 @@ const {
 router.get('/roommates/:username', async (req, res) => {
   const { username } = req.params
   try {
-    const roommates = await getAllRoommates(username);
+    const roommates = await getRoommates(username);
     res.json(roommates);
   } catch (error) {
     // Handle errors with a 500 Internal Server Error response
@@ -35,7 +35,7 @@ router.get('/roommates/:id', async (req, res) => {
 router.post('/roommates', async (req, res) => {
   const { firstname, lastname, email, username } = req.body;
   try {
-    const result = await addNewRoommate(firstname, lastname, email, username);
+    const result = await postRoommate(firstname, lastname, email, username);
     res.status(201).json({ success: true, message: 'Roommate added successfully' });
   } catch (error) {
     // Handle errors with a 500 Internal Server Error response

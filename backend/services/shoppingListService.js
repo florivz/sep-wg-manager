@@ -39,7 +39,7 @@ const deleteShoppingListItem = async (itemid) => {
  * @returns {Promise<Object>} The added shopping list item.
  * @throws {Error} If there's an issue with the database query.
  */
-const addShoppingListItem = async (itemname, username) => {
+const postShoppingListItem = async (itemname, username) => {
   try {
     const query = 'INSERT INTO shoppinglist (ItemName, username) VALUES ($1, $2) RETURNING *';
     const result = await pool.query(query, [itemname, username]);
@@ -67,6 +67,6 @@ const getItems = async () => {
 module.exports = {
   getShoppingList,
   deleteShoppingListItem,
-  addShoppingListItem,
+  postShoppingListItem,
   getItems
 };

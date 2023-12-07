@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext.js';
 
 function RoommateManagement() {
+  
   const { roommates, setRoommates } = useRoommates();
   const username = useAuth().user.user.username;
 
@@ -12,7 +13,6 @@ function RoommateManagement() {
     firstname: '',
     lastname: '',
     email: '',
-    username: ''
   });
 
   // Handle form submission
@@ -65,7 +65,6 @@ function RoommateManagement() {
           firstname: '',
           lastname: '',
           email: '',
-          username: ''
         });
       })
       .catch((error) => {

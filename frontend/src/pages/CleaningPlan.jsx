@@ -5,6 +5,7 @@ import { FaTrash } from 'react-icons/fa';
 import { useAuth } from '../contexts/AuthContext';
 
 function CleaningSchedule() {
+  
   const [tasks, setTasks] = useState([]);
   const [roommates, setRoommates] = useState([]);
   const [selectedRoommate, setSelectedRoommate] = useState('');

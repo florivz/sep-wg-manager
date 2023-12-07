@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
 
 const ShoppingList = () => {
+  
   const [newItem, setNewItem] = useState('');
   const [items, setItems] = useState([]);
   const [error, setError] = useState(null);

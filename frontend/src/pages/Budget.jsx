@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
 
 const Budget = () => {
-  // State variables
+
   const [expenses, setExpenses] = useState([]);
   const [payer, setPayer] = useState('');
   const [description, setDescription] = useState('');

@@ -3,7 +3,7 @@ const router = express.Router();
 const {
   getShoppingList,
   deleteShoppingListItem,
-  addShoppingListItem,
+  postShoppingListItem,
   getItems
 } = require('../services/shoppingListService');
 
@@ -38,7 +38,7 @@ router.delete('/shopping-items/:itemID', async (req, res) => {
 router.post('/shopping-items', async (req, res) => {
   const { itemname, username } = req.body;
   try {
-    const newItem = await addShoppingListItem(itemname, username);
+    const newItem = await postShoppingListItem(itemname, username);
     res.json(newItem);
   } catch (err) {
     console.error('Error while adding item:', err);
