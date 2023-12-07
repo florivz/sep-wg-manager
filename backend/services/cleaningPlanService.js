@@ -7,7 +7,7 @@ const pool = require('../db/connection');
  * @returns {Promise<Array>} An array of cleaning tasks.
  * @throws {Error} If there's an issue with the database query.
  */
-const getAllCleaningTasks = async (username) => {
+const getCleaningTasks = async (username) => {
     try {
         const result = await pool.query('SELECT * FROM cleaningtasks WHERE username = $1', [username]);
         return result.rows;
@@ -40,7 +40,7 @@ const deleteCleaningTask = async (taskId) => {
  * @returns {Promise<Object>} The result of the insert operation.
  * @throws {Error} If there's an issue with the database query.
  */
-const addCleaningTask = async (task, roommateId, username) => {
+const postCleaningTask = async (task, roommateId, username) => {
     try {
         const query = 'INSERT INTO cleaningtasks (task, roommateid, username) VALUES ($1, $2, $3)';
         const result = await pool.query(query, [task, roommateId, username]);
@@ -51,7 +51,7 @@ const addCleaningTask = async (task, roommateId, username) => {
 };
 
 module.exports = {
-    getAllCleaningTasks,
-    addCleaningTask,
+    getCleaningTasks,
+    postCleaningTask,
     deleteCleaningTask
 };

@@ -31,7 +31,7 @@ const {user} = useAuth();
           <Nav className="d-flex">
             <Link to="/home" className="me-2">
               <button type="button" className="btn-lg btn btn-primary">
-              Zurück <i class="bi bi-backspace"></i>
+              Zurück <i className="bi bi-backspace"></i>
               </button>
             </Link>
             <Link to="/login">

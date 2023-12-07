@@ -6,7 +6,7 @@ const pool = require('../db/connection');
  * @returns {Promise<Array>} A promise that resolves to an array of roommates.
  * @throws {Error} If there's an issue with the database query.
  */
-const getAllRoommates = async (username) => {
+const getRoommates = async (username) => {
   try {
     const result = await pool.query('SELECT * FROM roommates WHERE username = $1', [username]);
     return result.rows;
@@ -40,8 +40,9 @@ const getRoommateById = async (id) => {
  * @returns {Promise} A promise that resolves when the roommate is added successfully.
  * @throws {Error} If there's an issue with the database query.
  */
-const addNewRoommate = async (firstname, lastname, email, username) => {
+const postRoommate = async (firstname, lastname, email, username) => {
   try {
+    console.log('Service: ', firstname, lastname, email, username);
     await pool.query('INSERT INTO roommates (firstname, lastname, email, username) VALUES ($1, $2, $3, $4)', [firstname, lastname, email, username]);
   } catch (error) {
     throw error;
@@ -64,8 +65,8 @@ const deleteRoommate = async (id) => {
 };
 
 module.exports = {
-  getAllRoommates,
+  getRoommates,
   getRoommateById,
-  addNewRoommate,
+  postRoommate,
   deleteRoommate
 };

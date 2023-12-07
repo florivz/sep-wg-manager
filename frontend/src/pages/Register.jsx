@@ -6,7 +6,7 @@ import { useAuth } from '../contexts/AuthContext';
 import Header from '../components/Header';
 
 function Register() {
-    // Define state variables for username, password, email, and registration response
+    
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
