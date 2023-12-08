@@ -1,0 +1,318 @@
+openapi: 3.0.3
+info:
+  title: WG-Manager API
+  description: API for managing expenses, cleaning tasks, roommates, shopping lists, and user authentication in a shared household.
+  version: 1.0.0
+  contact:
+    email: contact@wgmanager.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: ''
+    description: Local server
+tags:
+  - name: expenses
+    description: Operations related to expenses
+  - name: cleaning
+    description: Operations related to cleaning tasks
+  - name: roommates
+    description: Operations related to roommates
+  - name: shopping
+    description: Operations related to shopping lists
+  - name: auth
+    description: Operations related to user authentication
+
+components:
+  schemas:
+    Expense:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        roommateid:
+          type: integer
+        amount:
+          type: number
+          format: double
+        description:
+          type: string
+        username:
+          type: string
+      required:
+        - roommateid
+        - amount
+        - description
+        - username
+    CleaningTask:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        task:
+          type: string
+        roommateId:
+          type: integer
+        username:
+          type: string
+    Roommate:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        firstname:
+          type: string
+        lastname:
+          type: string
+        email:
+          type: string
+        username:
+          type: string
+    ShoppingListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        itemname:
+          type: string
+        username:
+          type: string
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        username:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+
+  requestBodies:
+    Expense:
+      description: Expense object that needs to be added to the store
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Expense'
+    CleaningTask:
+      description: CleaningTask object that needs to be added to the store
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CleaningTask'
+    Roommate:
+      description: Roommate object that needs to be added to the store
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Roommate'
+    ShoppingListItem:
+      description: ShoppingListItem object that needs to be added to the store
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ShoppingListItem'
+    User:
+      description: User object that needs to be added to the store
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
+
+paths:
+  /expenses/{username}:
+    get:
+      tags:
+        - expenses
+      summary: Get all expenses for a user
+      parameters:
+        - name: username
+          in: path
+          description: The username of the user whose expenses are to be retrieved
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Expense'
+    post:
+      tags:
+        - expenses
+      summary: Add a new expense
+      parameters:
+        - name: username
+          in: path
+          description: The username of the user adding the expense
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Expense object to be added
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Expense'
+      responses:
+        '201':
+          description: Expense added successfully
+        '400':
+          description: Invalid input
+  /expenses/{id}:
+    delete:
+      tags:
+        - expenses
+      summary: Delete an expense by ID
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the expense to be deleted
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Expense deleted successfully
+        '404':
+          description: Expense not found
+  /cleaning-tasks/{username}:
+    get:
+      tags:
+        - cleaning
+      summary: Get all cleaning tasks for a user
+      parameters:
+        - name: username
+          in: path
+          description: The username of the user whose cleaning tasks are to be retrieved
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CleaningTask'
+    post:
+      tags:
+        - cleaning
+      summary: Add a new cleaning task
+      parameters:
+        - name: username
+          in: path
+          description: The username of the user adding the cleaning task
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: CleaningTask object to be added
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CleaningTask'
+      responses:
+        '201':
+          description: Cleaning task added successfully
+        '400':
+          description: Invalid input
+  /roommates:
+    get:
+      tags:
+        - roommates
+      summary: Get all roommates
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Roommate'
+  /shopping-list/{username}:
+    get:
+      tags:
+        - shopping
+      summary: Get shopping list items for a user
+      parameters:
+        - name: username
+          in: path
+          description: The username of the user whose shopping list items are to be retrieved
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShoppingListItem'
+    post:
+      tags:
+        - shopping
+      summary: Add a new item to the shopping list
+      parameters:
+        - name: username
+          in: path
+          description: The username of the user adding the shopping list item
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: ShoppingListItem object to be added
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShoppingListItem'
+      responses:
+        '201':
+          description: Shopping list item added successfully
+        '400':
+          description: Invalid input
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: Authenticate a user
+      requestBody:
+        description: User credentials for authentication
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Authentication successful
+        '401':
+          description: Authentication failed
+  /auth/logout:
+    post:
+      tags:
+        - auth
+      summary: Logout the authenticated user
+      responses:
+        '200':
+          description: Logout successful
+

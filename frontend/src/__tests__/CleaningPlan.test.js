@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
-import CleaningSchedule from './CleaningSchedule';
+import CleaningSchedule from './CleaningSchedule'; // Import the CleaningSchedule component for testing
 
 describe('CleaningSchedule Component Tests', () => {
   // Mock Axios and useAuth functions
@@ -15,16 +15,20 @@ describe('CleaningSchedule Component Tests', () => {
     })
   }));
 
+  // Test to check if the CleaningSchedule component renders without errors
   test('renders CleaningSchedule component without errors', () => {
     const { getByText, getByLabelText } = render(<CleaningSchedule />);
   
-    const titleElement = getByText('Putzplan');
-    const roommateSelect = getByLabelText('Mitbewohner/in auswählen');
+    // Get elements by text content and label text
+    const titleElement = getByText('Putzplan'); // Title
+    const roommateSelect = getByLabelText('Mitbewohner/in auswählen'); // Roommate selection
     
+    // Assert that the elements are in the document
     expect(titleElement).toBeInTheDocument();
     expect(roommateSelect).toBeInTheDocument();
   });
 
+  // Test to add a cleaning task when the form is submitted
   test('adds a cleaning task when the form is submitted', async () => {
     const { getByLabelText, getByText } = render(<CleaningSchedule />);
     
@@ -32,6 +36,7 @@ describe('CleaningSchedule Component Tests', () => {
     const taskInput = getByLabelText('Aufgabe eingeben');
     const addButton = getByText('Hinzufügen');
     
+    // Simulate user input by firing change events
     fireEvent.change(roommateSelect, { target: { value: '1' } });
     fireEvent.change(taskInput, { target: { value: 'Testaufgabe' } });
     
@@ -44,6 +49,7 @@ describe('CleaningSchedule Component Tests', () => {
     expect(taskRow).toBeInTheDocument();
   });
 
+  // Test to delete a cleaning task when the delete button is clicked
   test('deletes a cleaning task when the delete button is clicked', async () => {
     const { getByLabelText, getByText, queryByText } = render(<CleaningSchedule />);
     
@@ -51,6 +57,7 @@ describe('CleaningSchedule Component Tests', () => {
     const taskInput = getByLabelText('Aufgabe eingeben');
     const addButton = getByText('Hinzufügen');
     
+    // Simulate user input by firing change events
     fireEvent.change(roommateSelect, { target: { value: '1' } });
     fireEvent.change(taskInput, { target: { value: 'Testaufgabe' } });
     
