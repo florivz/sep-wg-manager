@@ -39,7 +39,7 @@ describe('Register Component Tests', () => {
   
     // Get elements by text content and label text
     const registerHeader = getByText('Neue/n Nutzer/in anlegen'); // Register header
-    const usernameInput = getByLabelText('Nutzername:'); // Username input
+    const usernameInput = getByLabelText('WG-Name:'); // Username input
     const passwordInput = getByLabelText('Passwort:'); // Password input
     const emailInput = getByLabelText('Email:'); // Email input
     const registerButton = getByText('Registrieren'); // Register button
@@ -61,7 +61,7 @@ describe('Register Component Tests', () => {
       </mockAuthProvider>
     );
 
-    const usernameInput = getByLabelText('Nutzername:');
+    const usernameInput = getByLabelText(':');
     const passwordInput = getByLabelText('Passwort:');
     const emailInput = getByLabelText('Email:');
     const registerButton = getByText('Registrieren');

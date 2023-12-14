@@ -33,7 +33,7 @@ router.post(
         } catch (error) {
             // Handle any errors that occur during the process
             // For example, if the username or password is not valid
-            res.status(500).json({ success: false, message: 'Username or password not valid.', error: error.message });
+            res.status(500).json({ success: false, message: 'WG-Name min. 3 Zeichen und Passwort min. 5 Zeichen.', error: error.message });
         }
     }
 );

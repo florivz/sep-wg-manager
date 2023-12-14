@@ -32,7 +32,7 @@ const addUser = async (username, password, email) => {
                 throw new Error('User could not be added');
             }
         } else {
-            throw new Error('Username or password too not valid');
+            throw new Error('WG Name min. 3 Zeichen und Passwort min. 5 Zeichen.');
         }
     } catch (error) {
         // Handle and rethrow any errors that occur during the process.
