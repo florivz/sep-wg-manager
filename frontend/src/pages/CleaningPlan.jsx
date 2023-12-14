@@ -39,11 +39,12 @@ function CleaningSchedule() {
 
   const fetchRoommates = () => {
     try {
-      axios.get('http://localhost:5001/api/roommates')
+      axios.get(`http://localhost:5001/api/roommates/${username}`)
         .then((response) => {
           if (Array.isArray(response.data)) {
             // Update roommates state with fetched data
             setRoommates(response.data);
+            console.log(roommates);
           } else {
             console.error('Data is not an array:', response.data);
           }
