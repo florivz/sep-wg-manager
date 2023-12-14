@@ -39,7 +39,7 @@ describe('Login Component Tests', () => {
   
     // Get elements by text content and label text
     const loginHeader = getByText('Login');
-    const usernameInput = getByLabelText('Nutzername:');
+    const usernameInput = getByLabelText('WG-Name:');
     const passwordInput = getByLabelText('Passwort:');
     const loginButton = getByText('Login');
     
@@ -59,7 +59,7 @@ describe('Login Component Tests', () => {
       </mockAuthProvider>
     );
 
-    const usernameInput = getByLabelText('Nutzername:');
+    const usernameInput = getByLabelText('WG-Name:');
     const passwordInput = getByLabelText('Passwort:');
     const loginButton = getByText('Login');
 
@@ -90,7 +90,7 @@ describe('Login Component Tests', () => {
       </mockAuthProvider>
     );
 
-    const usernameInput = getByLabelText('Nutzername:');
+    const usernameInput = getByLabelText('WG-Name:');
     const passwordInput = getByLabelText('Passwort:');
     const loginButton = getByText('Login');
 

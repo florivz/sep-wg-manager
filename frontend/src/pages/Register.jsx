@@ -63,7 +63,7 @@ function Register() {
                             <div className="card-body">
                                 <form onSubmit={handleSubmit}>
                                     <div className="form-group">
-                                        <label>Nutzername:</label>
+                                        <label>WG-Name:</label>
                                         <input
                                             type="text"
                                             className="form-control"
