@@ -30,7 +30,7 @@ function Login() {
                 navigate('/home');
             } else {
                 // If the status code is not 200, set an error message
-                setLoginError('Login failed: Invalid status code');
+                setLoginError('Login fehlgeschlagen: No error code');
             }
         } catch (error) {
             // Handle errors that occur during the API request
@@ -39,12 +39,12 @@ function Login() {
                 setLoginError(error.response.data);
             } else {
                 // If there's a network error or other unhandled error, set a generic error message
-                setLoginError('Login failed: Network error');
+                setLoginError('Login fehlgeschlagen: Netzwerk fehler');
             }
             // Log the error to the console for debugging purposes
             console.error(error);
             // Display an alert to the user with a generic error message
-            window.alert('Login failed: Incorrect username or password');
+            window.alert('Login fehlgeschlagen: Falscher WG-Name oder Passwort');
         }
     };
 
