@@ -1,10 +1,9 @@
 const express = require('express');
 const supertest = require('supertest');
 const app = require('../app');
-
-// Create a test instance of the Express app
 const testApp = supertest(app);
 
+// Test if local server is running
 describe('Express App', () => {
   it('should respond with "Server is running" for /serverstatus route', async () => {
     try {

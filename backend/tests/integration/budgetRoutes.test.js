@@ -2,7 +2,7 @@ const request = require('supertest');
 const express = require('express');
 const app = express();
 const router = require('../routes/budgetRoutes');
-const { getExpenses, postExpense, deleteExpense } = require('../services/budgetService'); // Import your service functions
+const { getExpenses, postExpense, deleteExpense } = require('../services/budgetService');
 
 jest.mock('../services/budgetService');
 

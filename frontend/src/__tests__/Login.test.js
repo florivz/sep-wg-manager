@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import axios from 'axios';
-import Login from './Login'; // Import the Login component for testing
+import Login from './Login';
 import { AuthProvider } from '../contexts/AuthContext';
 
 describe('Login Component Tests', () => {

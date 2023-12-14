@@ -42,7 +42,6 @@ const getRoommateById = async (id) => {
  */
 const postRoommate = async (firstname, lastname, email, username) => {
   try {
-    console.log('Service: ', firstname, lastname, email, username);
     await pool.query('INSERT INTO roommates (firstname, lastname, email, username) VALUES ($1, $2, $3, $4)', [firstname, lastname, email, username]);
   } catch (error) {
     throw error;

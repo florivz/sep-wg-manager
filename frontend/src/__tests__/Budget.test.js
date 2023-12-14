@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import Budget from './Budget'; // Import the Budget component for testing
+import Budget from './Budget';
 
 describe('Budget Component Tests', () => {
   // Test to check if the Budget component renders without errors

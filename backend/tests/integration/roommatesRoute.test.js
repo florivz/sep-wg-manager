@@ -2,8 +2,6 @@
 const request = require('supertest');
 const express = require('express');
 const app = express();
-
-// Import the router for roommatesRoutes
 const router = require('../routes/roommatesRoutes');
 
 // Middleware to parse incoming JSON data

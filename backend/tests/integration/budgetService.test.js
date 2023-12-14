@@ -24,9 +24,7 @@ describe('Expense Service', () => {
                 // Assert that the expenses variable is an array
                 expect(Array.isArray(expenses)).toBe(true);
                 expect(expenses.length).toBeGreaterThan(0);
-                // Add more expectations as needed
             } catch (error) {
-                // Handle errors, fail the test if necessary
                 fail(error);
             }
         });
@@ -48,9 +46,7 @@ describe('Expense Service', () => {
                 expect(newExpense.amount).toBe(amount);
                 expect(newExpense.description).toBe(description);
                 expect(newExpense.username).toBe(username);
-                // Add more expectations as needed
             } catch (error) {
-                // Handle errors, fail the test if necessary
                 fail(error);
             }
         });
@@ -67,12 +63,10 @@ describe('Expense Service', () => {
                 // Assert that the 'deleted' variable is true since a row should be deleted
                 expect(deleted).toBe(true);
 
-                // You can also assert that the expense no longer exists in the database
                 const expenses = await getExpenses('testuser');
                 const matchingExpense = expenses.find(expense => expense.expenseid === testExpense.expenseid);
                 expect(matchingExpense).toBeUndefined();
             } catch (error) {
-                // Handle errors, fail the test if necessary
                 fail(error);
             }
         });

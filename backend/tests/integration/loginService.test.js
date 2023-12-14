@@ -3,8 +3,6 @@ const bcrypt = require('bcrypt');
 const express = require('express');
 const supertest = require('supertest');
 const { loginService } = require('../services/loginService');
-
-// Create an Express app to use for testing
 const app = express();
 app.use(express.json());
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import { AuthProvider } from '../contexts/AuthContext';
-import ShoppingList from './ShoppingList'; // Import the ShoppingList component for testing
+import ShoppingList from './ShoppingList';
 
 describe('ShoppingList Component Tests', () => {
   // Mock axios.get, axios.post, and axios.delete

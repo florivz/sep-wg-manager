@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom'; 
 import { AuthProvider } from '../contexts/AuthContext';
-import Header from './Header'; // Import the Header component for testing
+import Header from './Header';
 
 describe('Header Component Tests', () => {
   // Test to check if the Header component renders without errors

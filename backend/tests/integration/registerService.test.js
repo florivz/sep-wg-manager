@@ -2,8 +2,6 @@ const pool = require('../db/connection');
 const express = require('express');
 const supertest = require('supertest');
 const { addUser, checkUsernameExists } = require('../services/userService');
-
-// Create an Express app to use for testing
 const app = express();
 app.use(express.json());
 
@@ -16,7 +14,7 @@ app.post('/api/register', async (req, res) => {
   try {
     // Check if the username already exists in mockUsers
     if (mockUsers.find((u) => u.username === username)) {
-      throw new Error('Username already exists');
+      throw new Error('WG existiert bereits.');
     }
 
     // Add the new user to mockUsers

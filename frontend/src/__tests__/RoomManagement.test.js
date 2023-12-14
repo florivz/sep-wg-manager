@@ -3,7 +3,7 @@ import { render, fireEvent, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import { RoommateProvider } from '../contexts/RoommateContext';
 import { AuthProvider } from '../contexts/AuthContext';
-import RoommateManagement from './RoommateManagement'; // Import the RoommateManagement component for testing
+import RoommateManagement from './RoommateManagement';
 
 describe('RoommateManagement Component Tests', () => {
   // Mock axios.get, axios.delete, and axios.post

@@ -7,8 +7,6 @@ const {
   postRoommate,
   deleteRoommate
 } = require('../services/roommateService');
-
-// Create an Express app to use for testing
 const app = express();
 app.use(express.json());
 

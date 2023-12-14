@@ -32,8 +32,8 @@ router.post(
             res.status(200).json({ success: true, message: 'User successfully added', user });
         } catch (error) {
             // Handle any errors that occur during the process
-            // For example, if the username or password is too short
-            res.status(500).json({ success: false, message: 'Username or password too short', error: error.message });
+            // For example, if the username or password is not valid
+            res.status(500).json({ success: false, message: 'Username or password not valid.', error: error.message });
         }
     }
 );

@@ -23,7 +23,7 @@ function Register() {
             const checkUsernameResponse = await axios.get(`http://localhost:5001/api/${username}`);
 
             if (checkUsernameResponse.data.exists) {
-                setRegisterResponse('Username already exists');
+                setRegisterResponse('WG existiert bereits.');
                 return;
             }
 
@@ -55,11 +55,11 @@ function Register() {
         <div>
             <Header simple={true} />
             <div className="container mt-5">
-                <h1 className="text-center mb-4">Registrierung</h1>
+                <h1 className="text-center mb-4">Neue WG registrieren</h1>
                 <div className="row justify-content-center">
                     <div className="col-md-6">
                         <div className="card">
-                            <div className="card-header">Neue/n Nutzer/in anlegen</div>
+                            <div className="card-header">Neue WG anlegen</div>
                             <div className="card-body">
                                 <form onSubmit={handleSubmit}>
                                     <div className="form-group">

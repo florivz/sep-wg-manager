@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
-import CleaningSchedule from './CleaningSchedule'; // Import the CleaningSchedule component for testing
+import CleaningSchedule from './CleaningSchedule';
 
 describe('CleaningSchedule Component Tests', () => {
   // Mock Axios and useAuth functions

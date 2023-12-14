@@ -6,12 +6,12 @@ const pool = require('../db/connection');
  * @param {string} password - The password for the new user.
  * @param {string} email - The email address for the new user.
  * @returns {Promise<Object>} - The newly added user object.
- * @throws {Error} - If username or password is too short, if the username already exists, or if the user could not be added.
+ * @throws {Error} - If username or password is not valid, if the username already exists, or if the user could not be added.
  */
 const addUser = async (username, password, email) => {
     try {
         // Check if username and password meet minimum length requirements.
-        if (username.length > 3 && password.length > 5) {
+        if (username.length > 3 && username.length < 20 && password.length > 5 && password.length < 20) {
             // Check if the username already exists in the database.
             const checkQuery = "SELECT * FROM users WHERE username = $1";
             const checkResult = await pool.query(checkQuery, [username]);
@@ -32,7 +32,7 @@ const addUser = async (username, password, email) => {
                 throw new Error('User could not be added');
             }
         } else {
-            throw new Error('Username or password too short');
+            throw new Error('Username or password too not valid');
         }
     } catch (error) {
         // Handle and rethrow any errors that occur during the process.

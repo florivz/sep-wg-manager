@@ -13,7 +13,7 @@ const username = useAuth().user.user.username;
         <div>
             <Header text='WG Manager' />
             <div className='text-center mt-3'>
-                <h1>Herzlichwillkommen {username}!</h1>
+                <h1>Herzlich Willkommen {username}!</h1>
                 <div className="home-container">
                     <div className="background-image"></div>
                     <div className='menu-div'>

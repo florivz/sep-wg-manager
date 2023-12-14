@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import Home from './Home'; // Import the Home component for testing
+import Home from './Home';
 
 describe('Home Component Tests', () => {
   // Mock useAuth and useRoommates for testing

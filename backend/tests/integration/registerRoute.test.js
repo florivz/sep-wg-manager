@@ -2,8 +2,6 @@
 const request = require('supertest');
 const express = require('express');
 const app = express();
-
-// Import the router for registerRoutes
 const router = require('../routes/registerRoutes');
 
 // Middleware to parse incoming JSON data
@@ -29,7 +27,7 @@ describe('Register Routes', () => {
     expect(response.body.success).toBe(true);
   });
 
-  it('should return a 500 status for short username or password', async () => {
+  it('should return a 500 status for invalid username or password', async () => {
     // Define sample user data with a short username and password for testing
     const userData = { username: 'user', password: 'pass', email: 'test@example.com' };
 
@@ -42,6 +40,6 @@ describe('Register Routes', () => {
     // Check if the response body is defined and contains expected properties
     expect(response.body).toBeDefined();
     expect(response.body.success).toBe(false);
-    expect(response.body.message).toContain('Username or password too short');
+    expect(response.body.message).toContain('password too short');
   });
 });

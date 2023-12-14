@@ -56,11 +56,11 @@ function Login() {
                 <div className="row justify-content-center">
                     <div className="col-md-6">
                         <div className="card">
-                            <div className="card-header">Login</div>
+                            <div className="card-header">WG einloggen</div>
                             <div className="card-body">
                                 <form onSubmit={handleSubmit}>
                                     <div className="form-group">
-                                        <label>Nutzername:</label>
+                                        <label>WG-Name:</label>
                                         <input
                                             type="text"
                                             className="form-control"

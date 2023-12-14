@@ -57,7 +57,6 @@ describe('Cleaning Task Service', () => {
         expect(Array.isArray(response.body)).toBe(true);
 
         expect(response.body.length).toBeGreaterThan(0);
-        // Add more expectations as needed
       } catch (error) {
         fail(error);
       }
@@ -81,9 +80,7 @@ describe('Cleaning Task Service', () => {
         expect(response.status).toBe(200);
 
         expect(response.body).toBeDefined();
-        // Add more expectations as needed
       } catch (error) {
-        // Handle errors, fail the test if necessary
         fail(error);
       }
     });
@@ -105,11 +102,8 @@ describe('Cleaning Task Service', () => {
         // Assert that the response status code is 200
         expect(response.status).toBe(200);
 
-        // You can also assert that the response contains information about the deleted task
         expect(response.body).toBeDefined();
-        // Add more expectations as needed
       } catch (error) {
-        // Handle errors, fail the test if necessary
         fail(error);
       }
     });

@@ -2,8 +2,6 @@
 const request = require('supertest');
 const express = require('express');
 const app = express();
-
-// Import the router for cleaning plan routes
 const router = require('../routes/cleaningPlanRoutes');
 
 // Configure Express to parse JSON requests

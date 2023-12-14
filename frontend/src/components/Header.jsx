@@ -6,27 +6,28 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useAuth } from '../contexts/AuthContext';
 
 function Header(props) {
-const {user} = useAuth();
+  const { user } = useAuth();
 
   if (props.simple) {
     return (
       <Navbar variant="dark" style={{backgroundColor: 'rgb(13, 110, 253)'}}>
         <div className="container-fluid d-flex justify-content-between align-items-center">
-          <Navbar.Brand>
+          <Navbar.Brand className="d-flex align-items-center">
             <img src={logo} className="img-fluid logo-size" alt="Responsive image" />
+            <h1 className="ms-3 my-0 text-white">WG Wizard</h1>
           </Navbar.Brand>
           <Nav className="d-flex">
           </Nav>
         </div>
       </Navbar>
     );
-  }
-  else {
+  } else {
     return (
       <Navbar variant="dark" style={{backgroundColor: 'rgb(13, 110, 253)'}}>
         <div className="container-fluid d-flex justify-content-between align-items-center">
-          <Navbar.Brand>
+          <Navbar.Brand className="d-flex align-items-center">
             <img src={logo} className="img-fluid logo-size" alt="Responsive image" />
+            <h1 className="ms-3 my-0 text-white">WG Wizard</h1>
           </Navbar.Brand>
           <Nav className="d-flex">
             <Link to="/home" className="me-2">

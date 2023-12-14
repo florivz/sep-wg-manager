@@ -1,22 +1,18 @@
 // Import required dependencies and services
-const pool = require('../db/connection'); // Database connection
-const express = require('express'); // Express framework
-const supertest = require('supertest'); // Testing library
+const pool = require('../db/connection'); 
+const express = require('express');
+const supertest = require('supertest');
 const {
   getShoppingList,
   deleteShoppingListItem,
   postShoppingListItem,
   getItems
-} = require('../services/shoppingListService'); // Import service functions
-
-// Create an Express application
+} = require('../services/shoppingListService'); 
 const app = express();
 app.use(express.json());
 
 // Mock shopping list array to simulate a database
 const mockShoppingList = [];
-
-// Define routes for the API
 
 // Get shopping list items for a specific username
 app.get('/api/shopping-list', async (req, res) => {
@@ -77,7 +73,7 @@ app.get('/api/items', async (req, res) => {
   }
 });
 
-// Test cases for shopping list service functions
+// Shopping list service functions
 describe('Shopping List Service', () => {
   beforeAll(async () => {
     // Connect to the database before running tests
