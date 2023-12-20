@@ -10,8 +10,7 @@ const pool = require('../db/connection');
  */
 const addUser = async (username, password, email) => {
     try {
-        // Check if username and password meet minimum length requirements.
-        if (username.length > 3 && username.length < 20 && password.length > 5 && password.length < 20) {
+         
             // Check if the username already exists in the database.
             const checkQuery = "SELECT * FROM users WHERE username = $1";
             const checkResult = await pool.query(checkQuery, [username]);
@@ -31,9 +30,6 @@ const addUser = async (username, password, email) => {
             } else {
                 throw new Error('User could not be added');
             }
-        } else {
-            throw new Error('WG Name min. 3 Zeichen und Passwort min. 5 Zeichen.');
-        }
     } catch (error) {
         // Handle and rethrow any errors that occur during the process.
         throw error;

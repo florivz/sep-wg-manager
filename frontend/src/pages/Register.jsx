@@ -37,11 +37,12 @@ function Register() {
             // Check if the registration was successful
             if (response.data.success) {
                 // Log the response data and perform user login
-                console.log(response.data);
+                setRegisterResponse(response.data.message);
                 login(response.data);
                 navigate('/home'); // Redirect to the home page after successful registration
             } else {
                 // Set registration response message in case of failure
+                console.log("Register.jsx")
                 setRegisterResponse(response.data.message);
             }
         } catch (error) {
